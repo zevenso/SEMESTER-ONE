@@ -1,0 +1,47 @@
+#include <iostream>
+#include <conio.h>
+using namespace std;
+
+int obtenerCosto(char* mensaje, int longitud) {
+    int costo = 0;
+
+    for (int i = 0; i < longitud; ++i) {
+        if (mensaje[i] == ' ') {
+            continue;
+        }
+        // if (mensaje[i] >= '0' && mensaje[i] <= '9')
+        if (isdigit(mensaje[i])) {
+            costo += 20;
+        }
+        else if (tolower(mensaje[i]) >= 'a' && tolower(mensaje[i]) <= 'z') {
+            costo += 10;
+        }
+        else {
+            costo += 30;
+        }
+    }
+
+    return costo;
+}
+
+int main() {
+    int longitud;
+
+    do {
+        cout << "Ingrese la longitud del mensaje: ";
+        cin >> longitud;
+    } while (longitud < 1);
+
+    char* mensaje = new char[longitud];
+
+    for (int i = 0; i < longitud; ++i) {
+        cout << "Ingrese el caracter #" << i + 1 << ": ";
+        cin >> mensaje[i];
+    }
+
+    cout << "\nEl costo del mensaje es: " << obtenerCosto(mensaje, longitud) << '\n';
+
+    delete[] mensaje;
+    getch();
+    return 0;
+}
