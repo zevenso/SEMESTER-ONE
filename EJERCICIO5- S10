@@ -1,0 +1,63 @@
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+
+int randInt(int from, int to) {
+    return rand() % (to - from + 1) + from;
+}
+
+int* generarArreglo(int cant) {
+    int* arreglo = new int[cant];
+
+    for (int i = 0; i < cant; ++i) {
+        arreglo[i] = randInt(1, 100);
+    }
+
+    return arreglo;
+}
+
+void mostrarArreglo(int* arreglo, int cant) {
+    cout << "Elementos del arreglo: ";
+
+    for (int i = 0; i < cant; ++i) {
+        cout << arreglo[i] << ' ';
+    }
+
+    cout << '\n';
+}
+
+void mostrarSecuenciasAsc(int* arreglo, int cant) {
+    cout << "Secuencias ascendentes:\n";
+
+    cout << arreglo[0] << ' ';
+
+    for (int i = 1; i < cant; ++i) {
+        if (arreglo[i - 1] > arreglo[i]) {
+            cout << '\n';
+        }
+        cout << arreglo[i] << ' ';
+    }
+
+    cout << '\n';
+}
+
+int main() {
+    srand(time(0));
+    int cantNumeros;
+
+    do {
+        cout << "Ingrese la cantidad de numeros: ";
+        cin >> cantNumeros;
+    } while (cantNumeros < 1 || cantNumeros > 50);
+
+    int* numeros = generarArreglo(cantNumeros);
+
+    mostrarArreglo(numeros, cantNumeros);
+    mostrarSecuenciasAsc(numeros, cantNumeros);
+
+    delete[] numeros;
+
+    getch();
+    return 0;
+}
