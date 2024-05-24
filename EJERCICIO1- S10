@@ -1,0 +1,46 @@
+#include <iostream>
+#include <conio.h>
+using namespace std;
+
+int obtenerSumatoriaDeNotas(int* notas, int cant) {
+    int sum = 0;
+
+    for (int i = 0; i < cant; ++i) {
+        sum += notas[i];
+    }
+
+    return sum;
+}
+
+int obtenerMenorNota(int* notas, int cant) {
+    int mn = notas[0];
+
+    for (int i = 1; i < cant; ++i) {
+        mn = min(mn, notas[i]);
+    }
+
+    return mn;
+}
+
+int main() {
+    const int CANT_NOTAS = 6;
+    int* notas = new int[CANT_NOTAS];
+
+    for (int i = 0; i < CANT_NOTAS; ++i) {
+        do {
+            cout << "Ingrese la nota #" << i + 1 << ": ";
+            cin >> notas[i];
+        } while (notas[i] < 0 || notas[i] > 20);
+    }
+
+    int sumatoriaNotas = obtenerSumatoriaDeNotas(notas, CANT_NOTAS);
+    int menorNota = obtenerMenorNota(notas, CANT_NOTAS);
+
+    //SALIDA DEL PROMEDIO
+    cout << "\nEl promedio de las notas es: " << 1.0 * (sumatoriaNotas - menorNota) / (CANT_NOTAS - 1) << '\n';
+    
+    
+    getch();
+    return 0;
+   
+}
