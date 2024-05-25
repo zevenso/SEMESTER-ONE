@@ -1,0 +1,144 @@
+EJERCICIO 1  - SEMANA 9
+
+#include <iostream>
+#include <conio.h>
+
+using namespace System;
+using namespace std;
+
+
+void incrementarNumero(float* ptNum) {
+	*ptNum = *ptNum + 5;
+	cout << "El numero en la funcion es: " << *ptNum << endl;
+}
+
+
+void Generar_numeros(int* a, int* b, int* c, int* d) {
+	do
+	{
+		// generar los numeros random
+		*a = rand() % 40 + 1;
+		*b = rand() % 40 + 1;
+		*c = rand() % 40 + 1;
+		*d = rand() % 40 + 1;
+	} while (*a == *b || *a == *c || *a == *d || *b == *c || *b == *d || *c == *d);
+}
+
+void Imprimir_numeros(int* a, int* b, int* c, int* d) {
+	cout << "a: " << *a << endl;
+	cout << "b: " << *b << endl;
+	cout << "c: " << *c << endl;
+	cout << "d: " << *d << endl;
+}
+
+int Hallar_mayor(int* a, int* b, int* c, int* d) {
+	// max(int n1, int n2) -> mayor
+	// max(a, max(b, max(c, d)))
+
+	if (*a > *b && *a > *c && *a > *d) {
+		return *a;
+	}
+	if (*b > *a && *b > *c && *b > *d) {
+		return *b;
+	}
+	if (*c > *a && *c > *b && *c > *d) {
+		return *c;
+	}
+	return *d;
+}
+
+int Hallar_menor(int* a, int* b, int* c, int* d) {
+	if (*a < *b && *a < *c && *a < *d) {
+		return *a;
+	}
+	if (*b < *a && *b < *c && *b < *d) {
+		return *b;
+	}
+	if (*c < *a && *c < *b && *c < *d) {
+		return *c;
+	}
+	return *d;
+}
+
+void intercambiar(int* n1, int* n2) {
+	int* aux;
+	aux = new int;
+	*aux = *n1;
+	*n1 = *n2;
+	*n2 = *aux;
+	delete aux;
+}
+
+void ordenar(int* a, int* b, int* c, int* d) {
+	// comparaciones del a
+	if (*b < *a) intercambiar(a, b);
+	if (*c < *a) intercambiar(a, c);
+	if (*d < *a) intercambiar(a, d);
+	// comparaciones del b
+	if (*c < *b) intercambiar(b, c);
+	if (*d < *b) intercambiar(b, d);
+	// comparaciones del c
+	if (*d < *c) intercambiar(c, d);
+}
+
+int Hallar_Anterior_Mayor(int* a, int* b, int* c, int* d) {
+	ordenar(a, b, c, d);
+	return *c;
+}
+
+void dibujarEscalon(int* num, int* alt) {
+	// si tiene 2 cifras
+	if (*num > 9) {
+		Console::SetCursorPosition(78 - *num, *alt);
+	}
+	// si tiene una cifra
+	else {
+		Console::SetCursorPosition(79 - *num, *alt);
+	}
+	cout << *num;
+	for (int i = 0; i < *num; i++)
+	{
+		cout << '*';
+	}
+	*alt = *alt + 1;
+}
+void Graficar(int* a, int* b, int* c, int* d) {
+	int* ptAlt;
+	ptAlt = new int;
+	*ptAlt = 2;
+	dibujarEscalon(a, ptAlt);
+	dibujarEscalon(b, ptAlt);
+	dibujarEscalon(c, ptAlt);
+	dibujarEscalon(d, ptAlt);
+
+}
+
+
+int main() {
+
+	int* a, * b, * c, * d;
+	a = new int;
+	b = new int;
+	c = new int;
+	d = new int;
+
+	Generar_numeros(a, b, c, d);
+	Imprimir_numeros(a, b, c, d);
+
+	cout << "El mayor es: " << Hallar_mayor(a, b, c, d) << endl;
+	cout << "El menor es: " << Hallar_menor(a, b, c, d) << endl;
+	cout << "El anterior a mayor es: " << Hallar_Anterior_Mayor(a, b, c, d) << endl;
+	ordenar(a, b, c, d);
+	cout << "Los numeros fueron ordenados\n";
+
+	Imprimir_numeros(a, b, c, d);
+	Graficar(a, b, c, d);
+	delete a;
+	delete b;
+	delete c;
+	delete d;
+
+	_getch();
+	return 0;
+
+}
