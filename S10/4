@@ -1,0 +1,88 @@
+EJERCICIO 4 - SEMANA 10
+
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+
+
+void GenerarDiametros(int cant, int* VDiametros) {
+	int inf = 5, sup = 30;
+
+	for (short i = 0; i < cant; i++)
+	{
+		VDiametros[i] = inf + rand() % (sup + 1 - inf);
+	}
+
+
+	int aux;
+
+	//ORDEN DESCENDENTE
+
+	for (int i = 0; i < cant - 1; i++)
+		for (int j = i + 1; j < cant; j++)
+			if (VDiametros[i] < VDiametros[j]) {
+				aux = VDiametros[i];
+				VDiametros[i] = VDiametros[j];
+				VDiametros[j] = aux;
+			}
+	cout << endl << "Orden descendente de los diametros :" << endl;
+	for (short i = 0; i < cant; i++)
+		cout << " - Perno # " << i + 1 << " : " << VDiametros[i] << " mm " << endl;
+}
+
+void Promedio(int cant, int* VDiametros) {
+
+	float suma, promedio;
+
+	for (short i = 0; i < cant; i++) {
+		suma += VDiametros[i];
+	}
+	promedio = suma / cant;
+
+	cout << endl << "El diametro promedio de los " << cant << " pernos analizados es : " << promedio << " mm ";
+
+}
+
+void Lista_Debajo_DE(int DE, int* VDiametros, int cant) {
+
+	int cont = 0;
+
+	for (int i = 0; i < cant; ++i) {
+		if (VDiametros[i] < DE) ++cont;
+	}
+
+	cout << endl << "Cantidad de pernos que tienen un diametro inferior al ingresado: "<< cont << " pernos.";
+	
+	if (cont > cant /2 ) {
+		cout << endl << "Lote defectuoso";
+	}
+}
+
+
+int main() {
+
+	int cant;
+	int* VDiametros; //ARREGLO DE LOS DIAMETROS
+
+	VDiametros = new int[cant];
+
+	do {
+		cout << endl << "Ingrese el numero de pernos a analizar : "; cin >> cant;
+	} while (cant < 1 || cant > 100);
+
+	GenerarDiametros(cant, VDiametros);
+	Promedio(cant, VDiametros);
+
+	int DE;
+	do {
+		cout << endl << "Ingrese un diametro DE: "; cin >> DE;
+	} while (DE < 1) ;
+
+	Lista_Debajo_DE(DE, VDiametros, cant);
+
+	delete[] VDiametros;
+
+	getch();
+	return 0;
+}
