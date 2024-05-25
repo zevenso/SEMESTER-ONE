@@ -1,0 +1,679 @@
+#include <iostream>
+#include <conio.h>
+#include <chrono>
+#include <thread>
+#include <Windows.h>
+#include <stdlib.h>
+
+
+using namespace std;
+using namespace this_thread;
+using namespace chrono;
+using chrono::system_clock;
+using namespace System;
+
+
+// DADOS DE PLAYER 1 CON CARACTERES ASCII 
+void dado(int num, int x, int y) {
+	// color del dado
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 14); // 14 es el código para el color amarillo
+	// caracteres ascii
+	char p;
+	char esquina1, esquina2, esquina3, esquina4, bh, bv;
+	esquina1 = 187;
+	esquina2 = 188;
+	esquina3 = 201;
+	esquina4 = 200;
+	bh = 205;
+	bv = 186;
+	p = 79;
+
+	// centrado de los dados en la consola
+	cout << "\n";
+	Console::SetCursorPosition(x, y);
+	cout << esquina3 << bh << bh << bh << bh << bh << esquina1 << "\n";
+	Console::SetCursorPosition(x, y + 1);
+	cout << bv;
+	// casos de los dados 1 al 6
+	switch (num)
+	{
+	case 1: cout << "     " << bv << "\n"; Console::SetCursorPosition(x, y + 2); cout << bv << "  " << p << "  " << bv << "\n";	Console::SetCursorPosition(x, y + 3);	cout << bv << "     " << bv << "\n"; Console::SetCursorPosition(x, y + 4);	break;
+	case 2: cout << "     " << bv << "\n"; Console::SetCursorPosition(x, y + 2); cout << bv << p << "   " << p << bv << "\n"; Console::SetCursorPosition(x, y + 3); cout << bv << "     " << bv << "\n"; Console::SetCursorPosition(x, y + 4); break;
+	case 3: cout << p << "    " << bv << "\n"; Console::SetCursorPosition(x, y + 2); cout << bv << "  " << p << "  " << bv << "\n"; Console::SetCursorPosition(x, y + 3); cout << bv << "    " << p << bv << "\n"; Console::SetCursorPosition(x, y + 4); break;
+	case 4: cout << p << "   " << p << bv << "\n"; Console::SetCursorPosition(x, y + 2); cout << bv << "     " << bv << "\n"; Console::SetCursorPosition(x, y + 3); cout << bv << p << "   " << p << bv << "\n"; Console::SetCursorPosition(x, y + 4); break;
+	case 5: cout << p << "   " << p << bv << "\n"; Console::SetCursorPosition(x, y + 2); cout << bv << "  " << p << "  " << bv << "\n"; Console::SetCursorPosition(x, y + 3); cout << bv << p << "   " << p << bv << "\n"; Console::SetCursorPosition(x, y + 4); break;
+	case 6: cout << p << "   " << p << bv << "\n"; Console::SetCursorPosition(x, y + 2); cout << bv << p << "   " << p << bv << "\n"; Console::SetCursorPosition(x, y + 3); cout << bv << p << "   " << p << bv << "\n"; Console::SetCursorPosition(x, y + 4); break;
+	default:
+		break;
+	}
+	cout << esquina4 << bh << bh << bh << bh << bh << esquina2;
+	SetConsoleTextAttribute(hConsole, 7); // restauramos el color predeterminado
+	sleep_for(500ms);
+}
+
+// DADOS DE LA PC CON CARACTERES ASCII 
+void dadoPC(int num, int x, int y) {
+	// color del dado de la PC
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole, 12); // 12 es el código para el color rojo
+	// caracteres ascii
+	char p;
+	char esquina1, esquina2, esquina3, esquina4, bh, bv;
+	esquina1 = 187;
+	esquina2 = 188;
+	esquina3 = 201;
+	esquina4 = 200;
+	bh = 205;
+	bv = 186;
+	p = 79;
+	// centrado de los dados en la consola
+	cout << "\n";
+	Console::SetCursorPosition(x, y);
+	cout << esquina3 << bh << bh << bh << bh << bh << esquina1 << "\n";
+	Console::SetCursorPosition(x, y + 1);
+	cout << bv;
+	// casos de los dados 1 al 6
+	switch (num)
+	{
+	case 1: cout << "     " << bv; Console::SetCursorPosition(x, y + 2); cout << bv << "  " << p << "  " << bv;	Console::SetCursorPosition(x, y + 3);	cout << bv << "     " << bv; Console::SetCursorPosition(x, y + 4);	break;
+	case 2: cout << "     " << bv; Console::SetCursorPosition(x, y + 2); cout << bv << p << "   " << p << bv; Console::SetCursorPosition(x, y + 3); cout << bv << "     " << bv; Console::SetCursorPosition(x, y + 4); break;
+	case 3: cout << p << "    " << bv; Console::SetCursorPosition(x, y + 2); cout << bv << "  " << p << "  " << bv; Console::SetCursorPosition(x, y + 3); cout << bv << "    " << p << bv; Console::SetCursorPosition(x, y + 4); break;
+	case 4: cout << p << "   " << p << bv; Console::SetCursorPosition(x, y + 2); cout << bv << "     " << bv; Console::SetCursorPosition(x, y + 3); cout << bv << p << "   " << p << bv; Console::SetCursorPosition(x, y + 4); break;
+	case 5: cout << p << "   " << p << bv; Console::SetCursorPosition(x, y + 2); cout << bv << "  " << p << "  " << bv; Console::SetCursorPosition(x, y + 3); cout << bv << p << "   " << p << bv; Console::SetCursorPosition(x, y + 4); break;
+	case 6: cout << p << "   " << p << bv; Console::SetCursorPosition(x, y + 2); cout << bv << p << "   " << p << bv; Console::SetCursorPosition(x, y + 3); cout << bv << p << "   " << p << bv; Console::SetCursorPosition(x, y + 4); break;
+	default:
+		break;
+	}
+	cout << esquina4 << bh << bh << bh << bh << bh << esquina2;
+
+	SetConsoleTextAttribute(hConsole, 7); // restauramos el color predeterminado
+	sleep_for(500ms);
+}
+
+// eliminar de la pantalla 
+void borrar(int columnas, int filas, int x, int y) {
+
+	for (int i = 0; i <= filas; i++)
+	{
+		Console::SetCursorPosition(x, y + i);
+		for (int j = 0; j < columnas; j++)
+		{
+			cout << " ";
+		}
+	}
+}
+
+// el menu
+void menu()
+{
+	char bv, bh, e1, e2, e3, e4;
+	bv = 186;
+	bh = 205;
+	e1 = 201;
+	e2 = 187;
+	e3 = 200;
+	e4 = 188;
+	int cm, comprobante;
+	char cm_;
+	comprobante = 0;
+
+	do
+	{
+		cm_ = 'x';	//cualquier cosa q sea diferente al caracter requerido para reiniciarlo
+		//system("clear");
+		system("cls");
+		cout << e1;
+		// cuadrito decorativo
+		for (int i = 0; i < 22; i++)
+		{
+			cout << bh;
+		}
+		cout << e2;
+		// bienvenida al jugador
+		cout << "\n" << bv << "                      " << bv << "\n" << bv << "  Bienvenido a D3 :D  " << bv << "\n" << bv << "                      " << bv << "\n";
+		cout << e3;
+		// cuadrito decorativo
+		for (int i = 0; i < 22; i++)
+			cout << bh;
+		cout << e4 << "\n\n";
+		cout << e1;
+		// cuadrito decorativo
+		for (int i = 0; i < 27; i++)
+			cout << bh;
+
+		cout << e2 << "\n" << bv << "                           " << bv << "\n";
+		// menu de opciones
+		cout << bv << "  (1) Iniciar el juego     " << bv << "\n";
+		cout << bv << "  (2) Salir                " << bv << "\n" << bv << "                           " << bv << "\n" << e3;
+		// cuadrito decorativo
+		for (int i = 0; i < 27; i++)
+			cout << bh;
+		cout << e4;
+		cout << "\n\n Presentado por el Grupo Solarth\n\nIntegrantes (A->Z):\n-Brianna Cristina Salinas Guzman\n-Jean Franco Jauregui Cerna\n-Miroslav Oscar Manosalva Tovar\n\n";
+		cout << "Como jugar?" << endl;
+		cout << "Tienes que tirar 5 dados simultaneamente con el objetivo de sacar la mayor cantidad de dados iguales. " << endl;
+		cout << "2 Dados iguales: Puedes volver a tirar" << endl;
+		cout << "3 Dados iguales: Obtienes 3 puntos" << endl;
+		cout << "4 Dados iguales: Obtienes 6 puntos" << endl,
+	    cout << "5 Dados iguales: Obtienes 12 puntos" << endl;
+		cout << "Usted jugara contra un sistema que jugara automaticamente" << endl;
+		cout << "El juego termina en la partida numero 10 y gana el que haya acumulado la mayor cantidad de puntos";
+		cout << "\n\n--> "; sleep_for(200ms);
+		cin >> cm; sleep_for(500ms);
+		// validacion de la opcion elegida
+		while (!(cm == 1 || cm == 2))
+		{
+			cout << "Ingrese un caracter valido\n--> ";
+			cin >> cm;
+		
+		}
+
+		if (cm == 1) {
+			// conteo para iniciar el juego 
+			if (comprobante == 1) {
+				cout << "\n\nEl juego iniciara en:\n"; sleep_for(1s);
+				cout << "5\n"; sleep_for(1s);
+				cout << "4\n"; sleep_for(1s);
+				cout << "3\n"; sleep_for(1s);
+				cout << "2\n"; sleep_for(1s);
+				cout << "1\n\n\n\n"; sleep_for(1s);
+
+				return;
+			}
+			else {
+				cout << "\n\nEsta seguro que desea iniciar el juego?\n";
+				cout << "Si: (S)\nNo: (N)\n--> ";
+				cin >> cm_;
+				// validacion de la opcion (1) Iniciar el juego 
+				while (!(cm_ == 'S' || cm_ == 's' || cm_ == 'N' || cm_ == 'n'))
+				{
+					cout << "Ingrese un caracter valido\n--> ";
+					cin >> cm_;
+				}
+				if (cm_ == 'S' || cm_ == 's')
+				{
+					
+					cout << "\nBuena suerte :D \n\n"; sleep_for(2s); return;
+				}
+
+			}
+
+
+
+
+		}
+	
+		// validacion de la opcion (2) Salir
+		if (cm == 2) {
+			cout << "\nEsta seguro de que desea salir? :(\nSi: (S)\nNo: (N)\n--> ";
+			cin >> cm_;
+			while (!(cm_ == 'S' || cm_ == 's' || cm_ == 'N' || cm_ == 'n'))
+			{
+				cout << "Ingrese un caracter valido\n--> ";
+				cin >> cm_;
+			}
+			if (cm_ == 'S' || cm_ == 's')
+			{
+				cout << "\nEsperamos que lo reconsidere y pueda intentar nuestro juego :(\n"; sleep_for(1s);
+				cout << "Tenga un buen dia.\n\n"; sleep_for(1s);
+				exit(0);
+			}
+		}
+		sleep_for(1300ms);
+	} while ((cm_ == 'N' || cm_ == 'n'));
+
+
+}
+// Division de la consola del Jugador y la PC con caracteres ascii 
+void tablero() {
+	char bh = 205;
+	char cruz = 206;
+	char bv = 186;
+	int posy;
+
+	Console::SetCursorPosition(50, 5);
+	for (int i = 0; i <= 15; i++)
+	{
+		cout << bh;
+	}
+	cout << cruz;
+	for (int i = 0; i <= 15; i++)
+	{
+		cout << bh;
+	}
+	for (int i = 2; i < 35; i++)
+	{
+		Console::SetCursorPosition(66, i);
+		if (i == 5)
+			cout << cruz;
+		else
+			cout << bv;
+	}
+}
+
+// Borrar dados de la consola de player 1
+void limpiardado() {
+
+	for (int i = 0; i <= 29; i++)
+	{
+		Console::SetCursorPosition(55, 6 + i);
+		cout << "       ";
+	}
+}
+// Borrar dados de la consola de la PC
+void limpiardadoPC() {
+
+	for (int i = 0; i <= 29; i++)
+	{
+		Console::SetCursorPosition(71, 6 + i);
+		cout << "       ";
+	}
+}
+
+
+int main() {
+
+
+	char inicio;
+	// variables de los puntajes y dados random
+	long long x = 1;
+	srand(time(NULL));
+	int puntaje1PLAYER;
+	int puntaje1CPU;
+	int d1, d2, d3, d4, d5;
+	int inferior = 1;
+	int superior = 6;
+	char respuesta;
+	int partida;
+
+	Console::SetWindowSize(100, 40);
+	char bh, bv, e1, e2, e3, e4;
+	bv = 186;
+	bh = 205;
+	e1 = 201;
+	e2 = 187;
+	e3 = 200;
+	e4 = 188;
+	int posx, posy, textoposy;
+	posx = 55;
+	posy = 6;
+	char cruz = 206;
+	menu();
+	textoposy = 10;
+	system("cls");
+
+	do
+	{
+		//Inicializar puntaje 0 y partida 1
+		puntaje1PLAYER = 0;
+		puntaje1CPU = 0;
+		partida = 1;
+
+		// Partidas
+		while (partida <= 10) {
+
+
+			borrar(50, 15, 0, 0);
+			limpiardado();
+			limpiardadoPC();
+
+			Console::SetCursorPosition(55, 3); cout << "Player"; Console::SetCursorPosition(72, 3); cout << "PC";
+			Console::SetCursorPosition(0, 0);
+			// conteo de partidas del 1 al 10
+			cout << "    <<<  Partida " << partida << "  >>> " << endl;
+			cout << "TURNO DEL JUGADOR" << endl << endl;
+			cout << "-----------------\n" << endl;
+
+			tablero();
+
+			Console::SetCursorPosition(0, 7);
+			// validacion de caracteres
+			do {
+				cout << "Pulse el caracter 'S' para tirar los dados" << endl;
+				cin >> respuesta;
+
+
+			} while ((respuesta != 'S') && (respuesta != 's'));
+
+			// lanzamiento de dados
+			cout << "\nSe tiran los dados";
+			cout << "."; sleep_for(700ms);
+			cout << "."; sleep_for(700ms);
+			cout << "."; sleep_for(700ms);
+			cout << endl << endl;
+			// random
+			d1 = inferior + rand() % (superior + 1 - inferior);
+			d2 = inferior + rand() % (superior + 1 - inferior);
+			d3 = inferior + rand() % (superior + 1 - inferior);
+			d4 = inferior + rand() % (superior + 1 - inferior);
+			d5 = inferior + rand() % (superior + 1 - inferior);
+
+			// posicion de los dados del JUGADOR
+			dado(d1, posx, posy);
+			dado(d2, posx, posy + 6);
+			dado(d3, posx, posy + 12);
+			dado(d4, posx, posy + 18);
+			dado(d5, posx, posy + 24);
+			Console::SetCursorPosition(0, 12);
+
+			// 5 dados iguales -> 12 puntos
+			if ((d1 == d2) && (d1 == d3) && (d1 == d4) && (d1 == d5)) {
+				borrar(50, 7, 0, 5);
+				Console::SetCursorPosition(0, 6);
+				cout << "Obtuviste 12 puntos!" << endl;
+				puntaje1PLAYER = puntaje1PLAYER + 12;
+
+
+			}
+			else {
+				// 4 dados iguales -> 6 puntos
+				if (((d1 == d2) && (d1 == d3) && (d1 == d4)) || ((d1 == d2) && (d1 == d3) && (d1 == d5)) || ((d4 == d3) && (d4 == d5) && (d4 == d2)) || ((d4 == d5) && (d4 == d1) && (d4 == d2)) || ((d1 == d3) && (d1 == d4) && (d1 == d5))) {
+					borrar(50, 7, 0, 5);
+					Console::SetCursorPosition(0, 6);
+					cout << "Obtuviste 6 puntos!" << endl;
+					puntaje1PLAYER = puntaje1PLAYER + 6;
+				}
+				else
+					// 3 dados iguales -> 3 puntos
+					if (((d1 == d2) && (d1 == d3)) || ((d1 == d2) && (d1 == d4)) || ((d1 == d2) && (d1 == d5)) || ((d2 == d3) && (d2 == d4)) || ((d2 == d3) && (d3 == d5)) || ((d3 == d4) && (d3 == d5)) || ((d3 == d4) && (d3 == d1)) || ((d1 == d5) && (d1 == d4)) || ((d5 == d3) && (d5 == d1)) || ((d2 == d4) && (d2 == d5))) {
+						borrar(50, 7, 0, 5);
+						Console::SetCursorPosition(0, 6);
+						cout << "Obtuviste 3 puntos!" << endl;
+						puntaje1PLAYER = puntaje1PLAYER + 3;
+					}
+					else {
+						// 2 dados igual se lanza de nuevo no gana puntos
+						if ((d1 == d2) || (d1 == d3) || (d1 == d4) || (d1 == d5) || (d2 == d3) || (d2 == d4) || (d2 == d5) || (d3 == d4) || (d3 == d5) || (d4 == d5)) {
+							while ((d1 == d2) || (d1 == d3) || (d1 == d4) || (d1 == d5) || (d2 == d3) || (d2 == d4) || (d2 == d5) || (d3 == d4) || (d3 == d5) || (d4 == d5)) {
+								borrar(50, 7, 0, 5);
+								Console::SetCursorPosition(0, 6);
+								cout << "Tire de nuevo!" << endl;
+								cout << "Pulse el caracter 'S' para tirar los dados de nuevo" << endl;
+								cin >> respuesta;
+								limpiardado();
+								borrar(50, 9, 0, 6);
+								Console::SetCursorPosition(0, 6);
+								cout << "\nSe tiran los dados";
+								cout << "."; sleep_for(100ms);
+								cout << "."; sleep_for(100ms);
+								cout << "."; sleep_for(100ms);
+								cout << endl << endl;
+								d1 = inferior + rand() % (superior + 1 - inferior);
+								d2 = inferior + rand() % (superior + 1 - inferior);
+								d3 = inferior + rand() % (superior + 1 - inferior);
+								d4 = inferior + rand() % (superior + 1 - inferior);
+								d5 = inferior + rand() % (superior + 1 - inferior);
+
+								// dados de segundo lanzamiento
+								dado(d1, posx, posy);
+								dado(d2, posx, posy + 6);
+								dado(d3, posx, posy + 12);
+								dado(d4, posx, posy + 18);
+								dado(d5, posx, posy + 24);
+								cout << endl;
+
+								// segundo player lanzamiento 5 dados iguales
+								if ((d1 == d2) && (d1 == d3) && (d1 == d4) && (d1 == d5)) {
+									borrar(50, 7, 0, 5);
+									Console::SetCursorPosition(0, 9);
+									cout << "Obtuviste 12 puntos!" << endl;
+									puntaje1PLAYER = puntaje1PLAYER + 12;
+									break;
+
+								}
+								// segundo player lanzamiento 4 dados iguales
+								if (((d1 == d2) && (d1 == d3) && (d1 == d4)) || ((d1 == d2) && (d1 == d3) && (d1 == d5)) || ((d4 == d3) && (d4 == d5) && (d4 == d2)) || ((d4 == d5) && (d4 == d1) && (d4 == d2)) || ((d1 == d3) && (d1 == d4) && (d1 == d5))) {
+									borrar(50, 7, 0, 5);
+									Console::SetCursorPosition(0, 9);
+									cout << "Obtuviste 6 puntos!" << endl;
+									puntaje1PLAYER = puntaje1PLAYER + 6;
+									break;
+								}
+
+								// segundo player lanzamiento 3 dados iguales
+								if (((d1 == d2) && (d1 == d3)) || ((d1 == d2) && (d1 == d4)) || ((d1 == d2) && (d1 == d5)) || ((d2 == d3) && (d2 == d4)) || ((d2 == d3) && (d3 == d5)) || ((d3 == d4) && (d3 == d5)) || ((d3 == d4) && (d3 == d1)) || ((d1 == d5) && (d1 == d4)) || ((d5 == d3) && (d5 == d1)) || ((d2 == d4) && (d2 == d5))) {
+									borrar(50, 7, 0, 5);
+									Console::SetCursorPosition(0, 9);
+									cout << "Obtuvo 3 puntos!" << endl;
+									puntaje1PLAYER = puntaje1PLAYER + 3;
+									break;
+								}
+								// segundo lanzamiento sin dados iguales
+								if ((d1 != d2) && (d1 != d3) && (d1 != d4) && (d1 != d5) && (d2 != d3) && (d2 != d4) && (d2 != d5) && (d3 != d4) && (d3 != d5) && (d4 != d5)) {
+									borrar(50, 7, 0, 5);
+									Console::SetCursorPosition(0, 9);
+									cout << "NINGUN PUNTO OBTENIDO" << endl;
+
+								}
+
+
+
+							}
+						}
+						else {
+							cout << "NINGUN PUNTO OBTENIDO" << endl << endl;
+
+
+						}
+
+
+					}
+			}
+			// lanza la PC
+			do {
+				cout << "Pulse el caracter 'S' para\ncontinuar con el turno de la PC" << endl;
+				cin >> respuesta;
+
+
+			} while ((respuesta != 'S') && (respuesta != 's'));
+
+
+			borrar(50, 15, 0, 1);
+			Console::SetCursorPosition(0, 1);
+			cout << "Turno de la PC\n" << endl;
+			cout << "-----------------" << endl; sleep_for(1s);
+			cout << "\nSe tiran los dados";
+			cout << "."; sleep_for(700ms);
+			cout << "."; sleep_for(700ms);
+			cout << "."; sleep_for(700ms);
+			cout << endl << endl;
+			// randoms
+			d1 = inferior + rand() % (superior + 1 - inferior);
+			d2 = inferior + rand() % (superior + 1 - inferior);
+			d3 = inferior + rand() % (superior + 1 - inferior);
+			d4 = inferior + rand() % (superior + 1 - inferior);
+			d5 = inferior + rand() % (superior + 1 - inferior);
+
+			// posicion de dados de PC
+			dadoPC(d1, posx + 16, posy);
+			dadoPC(d2, posx + 16, posy + 6);
+			dadoPC(d3, posx + 16, posy + 12);
+			dadoPC(d4, posx + 16, posy + 18);
+			dadoPC(d5, posx + 16, posy + 24);
+			cout << endl << endl;
+			// 5 dados iguales -> 12 puntos
+			if ((d1 == d2) && (d1 == d3) && (d1 == d4) && (d1 == d5)) {
+				borrar(50, 7, 0, 5);
+				Console::SetCursorPosition(0, 6);
+				cout << "PC obtuvo 12 puntos!" << endl;
+				puntaje1CPU = puntaje1CPU + 12;
+
+
+			}
+			else {
+				// 4 dados iguales -> 6 puntos
+				if (((d1 == d2) && (d1 == d3) && (d1 == d4)) || ((d1 == d2) && (d1 == d3) && (d1 == d5)) || ((d4 == d3) && (d4 == d5) && (d4 == d2)) || ((d4 == d5) && (d4 == d1) && (d4 == d2)) || ((d1 == d3) && (d1 == d4) && (d1 == d5))) {
+					borrar(50, 7, 0, 5);
+					Console::SetCursorPosition(0, 6);
+					cout << "PC obtuvo 6 puntos!" << endl;
+					puntaje1CPU = puntaje1CPU + 6;
+				}
+				else
+					// 3 dados iguales -> 3 puntos
+					if (((d1 == d2) && (d1 == d3)) || ((d1 == d2) && (d1 == d4)) || ((d1 == d2) && (d1 == d5)) || ((d2 == d3) && (d2 == d4)) || ((d2 == d3) && (d3 == d5)) || ((d3 == d4) && (d3 == d5)) || ((d3 == d4) && (d3 == d1)) || ((d1 == d5) && (d1 == d4)) || ((d5 == d3) && (d5 == d1)) || ((d2 == d4) && (d2 == d5))) {
+						borrar(50, 7, 0, 5);
+						Console::SetCursorPosition(0, 6);
+						cout << "PC obtuvo 3 puntos!" << endl;
+						puntaje1CPU = puntaje1CPU + 3;
+					}
+					else {
+
+						// 2 dados iguales se lanza de nuevo no gana puntos
+						if ((d1 == d2) || (d1 == d3) || (d1 == d4) || (d1 == d5) || (d2 == d3) || (d2 == d4) || (d2 == d5) || (d3 == d4) || (d3 == d5) || (d4 == d5)) {
+							while ((d1 == d2) || (d1 == d3) || (d1 == d4) || (d1 == d5) || (d2 == d3) || (d2 == d4) || (d2 == d5) || (d3 == d4) || (d3 == d5) || (d4 == d5)) {
+								borrar(50, 7, 0, 5);
+								Console::SetCursorPosition(0, 6);
+								cout << "LA PC TIRA DE NUEVO!" << endl; sleep_for(1000ms);
+								limpiardadoPC();
+								borrar(50, 9, 0, 6);
+								Console::SetCursorPosition(0, 6);
+								cout << "\nSe tiran los dados";
+								cout << "."; sleep_for(100ms);
+								cout << "."; sleep_for(100ms);
+								cout << "."; sleep_for(100ms);
+								cout << endl << endl;
+								d1 = inferior + rand() % (superior + 1 - inferior);
+								d2 = inferior + rand() % (superior + 1 - inferior);
+								d3 = inferior + rand() % (superior + 1 - inferior);
+								d4 = inferior + rand() % (superior + 1 - inferior);
+								d5 = inferior + rand() % (superior + 1 - inferior);
+
+
+								dadoPC(d1, posx + 16, posy);
+								dadoPC(d2, posx + 16, posy + 6);
+								dadoPC(d3, posx + 16, posy + 12);
+								dadoPC(d4, posx + 16, posy + 18);
+								dadoPC(d5, posx + 16, posy + 24);
+								cout << endl;
+								// lanzar de nuevo 5 dados iguales
+								if ((d1 == d2) && (d1 == d3) && (d1 == d4) && (d1 == d5)) {
+									borrar(50, 7, 0, 5);
+									Console::SetCursorPosition(0, 6);
+									cout << "PC Obtuvo 12 puntos!" << endl;
+									puntaje1CPU = puntaje1CPU + 12;
+									break;
+
+								}
+								// lanzar de nuevo 4 dados iguales PC
+								if (((d1 == d2) && (d1 == d3) && (d1 == d4)) || ((d1 == d2) && (d1 == d3) && (d1 == d5)) || ((d4 == d3) && (d4 == d5) && (d4 == d2)) || ((d4 == d5) && (d4 == d1) && (d4 == d2)) || ((d1 == d3) && (d1 == d4) && (d1 == d5))) {
+									borrar(50, 7, 0, 5);
+									Console::SetCursorPosition(0, 6);
+									cout << "PC obtuvo 6 puntos!" << endl;
+									puntaje1CPU = puntaje1CPU + 6;
+									break;
+								}
+
+								// lanzar de nuevo 3 dados iguales PC
+								if (((d1 == d2) && (d1 == d3)) || ((d1 == d2) && (d1 == d4)) || ((d1 == d2) && (d1 == d5)) || ((d2 == d3) && (d2 == d4)) || ((d2 == d3) && (d3 == d5)) || ((d3 == d4) && (d3 == d5)) || ((d3 == d4) && (d3 == d1)) || ((d1 == d5) && (d1 == d4)) || ((d5 == d3) && (d5 == d1)) || ((d2 == d4) && (d2 == d5))) {
+									borrar(50, 7, 0, 5);
+									Console::SetCursorPosition(0, 6);
+									cout << "PC obtuvo 3 puntos!" << endl;
+									puntaje1CPU = puntaje1CPU + 3;
+									break;
+								}
+								// lanzar de nuevo ningun dados iguales PC
+								if ((d1 != d2) && (d1 != d3) && (d1 != d4) && (d1 != d5) && (d2 != d3) && (d2 != d4) && (d2 != d5) && (d3 != d4) && (d3 != d5) && (d4 != d5)) {
+									borrar(50, 7, 0, 5);
+									Console::SetCursorPosition(0, 6);
+									cout << "NINGUN PUNTO OBTENIDO" << endl;
+
+								}
+
+
+
+							}
+						}
+						else {
+							//  sin dados iguales
+							borrar(50, 7, 0, 5);
+							Console::SetCursorPosition(0, 6);
+							cout << "NINGUN PUNTO OBTENIDO" << endl << endl;
+
+
+						}
+
+
+					}
+			}
+
+			if (partida <= 9) {
+
+				Console::SetCursorPosition(0, 20);
+				// Puntajes de las partidas
+				cout << endl << "__LeaderBoard__" << endl << endl;
+				if (puntaje1CPU > puntaje1PLAYER) {
+					// PC ganando
+					cout << "PC A LA DELANTERA!!!" << endl;
+					cout << "1 Lugar: PC: " << puntaje1CPU << endl;
+					cout << "2 Lugar: PLAYER: " << puntaje1PLAYER << endl << endl;
+
+
+
+				}
+				else {
+					// en caso de empate
+					if (puntaje1CPU == puntaje1PLAYER) {
+
+						cout << "En empate..." << endl;
+						cout << " PC: " << puntaje1CPU << endl;
+						cout << " PLAYER: " << puntaje1PLAYER << endl << endl;
+
+
+					}
+					else {
+						// Jugador ganando
+						cout << "VAS GANANDO!!!" << endl;
+						cout << "1 Lugar: PLAYER: " << puntaje1PLAYER << endl;
+						cout << "2 Lugar: PC: " << puntaje1CPU << endl << endl;
+
+
+
+					}
+
+
+				}
+
+			}
+			partida = partida + 1;
+			_getch();
+		}
+		// PUNTAJE FINAL
+		cout << "\n\nPuntaje final: \n->Usted: " << puntaje1PLAYER << "\n->PC: " << puntaje1CPU;
+		// MENSAJES PARA EL JUGADOR
+		if (puntaje1PLAYER > puntaje1CPU)
+			cout << "\n\nUsted Gana!! :D";
+		else if (puntaje1PLAYER < puntaje1CPU)
+			cout << "\n\nPerdiste, la PC salio victoriosa :O. Mejor suerte para la proxima.";
+		else
+			cout << "\n\n Wow! Quien lo hubiera imaginado :O, es un Empate!";
+
+		cout << "\n\n\nDesea volver a jugar?\n"; sleep_for(1s);
+		cout << "Si: (S)\nNo: (N)\n--> ";
+		cin >> inicio;
+
+		while (!(inicio == 'S' || inicio == 's'))
+		{
+			if (inicio == 'N' || inicio == 'n')
+			{
+				// AGRADECIMIENTO FINAL
+				cout << "\n\nGracias por probar nuestro juego :D"; sleep_for(2s);
+				exit(0);
+			}
+			else
+			{
+				cout << "\nIngrese un caracter valido: ";
+				cin >> inicio;
+			}
+		}
+
+
+	} while (inicio == 'S' || inicio == 's');
+
+	// FIN DEL CODIGO
+
+
+
+	_getch();
+	return 0;
+}
