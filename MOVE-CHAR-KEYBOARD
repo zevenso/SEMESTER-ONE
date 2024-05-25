@@ -1,0 +1,49 @@
+MOVER CARACTER CON TECLADO
+
+#include "pch.h"
+#include "conio.h"
+#include "iostream"
+#define ARRIBA 72
+#define ABAJO 80
+#define IZQUIERDA 75
+#define DERECHA 77
+#define WIDTH 80
+#define HEIGHT 40
+using namespace System;
+using namespace std;
+void define_ventana()
+{
+Console::SetWindowSize(WIDTH, HEIGHT);
+Console::Clear();
+Console::CursorVisible = false;
+}
+void ubica_cursor(int x, int y)
+{
+Console::SetCursorPosition(x, y);
+}
+//MAIN
+int main()
+{
+define_ventana();
+int x, y;
+x = 40; y = 20;
+ubica_cursor(x, y); cout << "*";
+while (1)
+{
+if (kbhit())
+{
+//borrar
+ubica_cursor(x, y); cout << " ";
+char tecla = getch();
+//mover
+if (tecla == ARRIBA && y > 0) y--;
+if (tecla == ABAJO && y < ABAJO) y++;
+if (tecla == DERECHA && x < WIDTH) x++;
+if (tecla == IZQUIERDA && x > 0) x--;
+//dibujar
+ubica_cursor(x, y); cout << "*";
+}
+}
+system("pause>0");
+return 0;
+}
