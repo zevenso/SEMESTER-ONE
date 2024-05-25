@@ -1,0 +1,113 @@
+EJERCICIO 2 - SEMANA 9
+
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+using namespace System;
+
+void menu() {
+	cout << "-------MENU-------" << endl;
+	cout << "1. Determinar el factorial de un numero" << endl;
+	cout << "2. Calcular el valor de ea" << endl;
+	cout << "3. Imprimir rombo" << endl;
+	cout << "4. Salir" << endl;
+}
+
+void validarOpcion(int* op) {
+	do {
+		cout << "Opcion: ";
+		cin >> *op;
+	} while (*op < 1 || *op > 4);
+}
+
+int calcularFactorial(int num) {
+	int fac = 1;
+	for (int i = num; i > 0; i--) {
+		fac *= i;
+	}
+	return fac;
+}
+
+void calcularEa(float& sum_ea) {
+	sum_ea = 0;
+	int a, k;
+	cout << "Ingrese a: ";
+	cin >> a;
+	cout << "Ingrese k: ";
+	cin >> k;
+	for (int i = 0; i <= k; i++) {
+		sum_ea += pow(a, i) / calcularFactorial(i);
+	}
+}
+
+void imprimirRombo(int n) {
+	int cc;
+	//triangulo arriba
+	for (int j = 0; j < n; j++) {
+		cc = 1;
+		//espacios vacios de la izquierda
+		for (int i = n - j - 1; i > 0; i--) {
+			cout << "  ";
+		}
+		//asteriscos
+		for (int i = 0; i < j * 2 + 1; i++) {
+			cout << cc++ << " ";
+		}
+		cout << endl;
+	}
+	//triangulo invertido
+	for (int j = 0; j < n; j++) {
+		cc = 1;
+		//espacios vacios a la izquierda
+		for (int i = 0; i <= j; i++) {
+			cout << "  ";
+		}
+		//asteriscos
+		for (int i = 0; i < 2 * (n - 1 - j) - 1; i++) {
+			cout << cc++ << " ";
+		}
+		cout << endl;
+	}
+}
+
+int main() {
+	int opc = 0;
+	int num;
+	float sum_ea = 0;
+
+	while (opc != 4) {
+		menu();
+		validarOpcion(&opc);
+		system("cls");
+		switch (opc)
+		{
+		case 1:
+			cout << "CALCULAR FACTORIAL" << endl;
+			cout << "Ingrese un numero: ";
+			cin >> num;
+			calcularFactorial(num);
+			cout << "El factorial es: " << calcularFactorial(num) << endl;
+			getch();
+			break;
+		case 2:
+			cout << "CALCULAR EA" << endl;
+			calcularEa(sum_ea);
+			cout << "El valor de ea es: " << sum_ea << endl;
+			getch();
+			break;
+		case 3:
+			cout << "DIBUJAR ROMBO" << endl;
+			cout << "Ingrese n: ";
+			cin >> num;
+			imprimirRombo(num);
+			getch();
+			break;
+		}
+		system("cls");
+	}
+	cout << "Chao" << endl;
+
+	getch();
+	return 0;
+}
