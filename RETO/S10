@@ -1,0 +1,78 @@
+RETO SEMANA 10
+
+#include <iostream>
+#include <conio.h>
+
+using namespace System;
+using namespace std;
+
+void GenerarMostrarDatos(int cant, int* VInteraccion) {
+ int inf = 1, sup = 100;
+ for (short i = 0; i < cant; i++)
+ {
+ VInteraccion[i] = inf + rand() % (sup + 1 - inf);
+ }
+
+ //EDADES
+ cout << endl << "Cantidad de interacciones segun el mes ";
+ for (int i = 0; i < cant; i++) {
+ cout << endl << " - Mes " << i + 1 << " : " << VInteraccion[i];
+ }
+}
+
+void Devuelve_Menor(int cant, int* VInteraccion) {
+ int menor = VInteraccion[0];
+ for (int i = 1; i < cant; i++)
+ if (VInteraccion[i] < menor)
+ menor = VInteraccion[i];
+ cout << endl << "La menor interaccion es : " << menor;
+}
+
+int Promedio(int cant, int* VInteraccion) {
+ float suma, promedio;
+ for (short i = 0; i < cant; i++)
+ suma += VInteraccion[i];
+ promedio = suma / cant;
+ return promedio;
+}
+
+void Lista_DebajodelPromedio(int cant, int* VInteraccion) {
+ cout << endl << "Interacciones registradas por debajo del promedio general son : " << endl;
+ int naprobados = 0;
+ for (short i = 0; i < cant; i++)
+ if (VInteraccion[i] >= Promedio(cant, VInteraccion)) {
+ cout << VInteraccion[i] << " ";
+ }
+}
+
+void Ordenar_datos(int cant, int* VInteraccion) {
+ int aux;
+ //ORDEN DESCENDENTE
+ for (int i = 0; i < cant - 1; i++)
+ for (int j = i + 1; j < cant; j++)
+ if (VInteraccion[i] < VInteraccion[j]) {
+ aux = VInteraccion[i];
+ VInteraccion[i] = VInteraccion[j];
+ VInteraccion[j] = aux;
+ }
+ cout << endl << "ORDENADO :" << endl;
+ for (short i = 0; i < cant; i++)
+ cout << " - Mes " << i + 1 << " : " << VInteraccion[i] << endl;
+}
+
+
+int main() {
+ int cant;
+ int* VInteraccion;
+ do {
+ cout << endl << "Ingrese la cantidad de meses de las interacciones : "; cin >> cant;
+ } while (cant < 1 || cant > 48);
+ VInteraccion = new int[cant];
+ GenerarMostrarDatos(cant, VInteraccion);
+ Devuelve_Menor(cant, VInteraccion);
+ Lista_DebajodelPromedio(cant, VInteraccion);
+ Ordenar_datos(cant, VInteraccion);
+ delete[] VInteraccion;
+ _getch();
+ return 0;
+}
