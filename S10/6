@@ -1,0 +1,56 @@
+EJERCICIO 6 - SEMANA 10
+
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+int main() {
+
+	int size = 20;
+	bool* primos = new bool[size];
+	int* nums = new int[21];
+	
+	for (int i = 2; i < 21; i++)
+	{
+		nums[i] = i;
+		cout << i << ' ';
+
+	} 	
+	cout << endl;
+	for (int i = 0; i < size; i++)
+	{
+		primos[i] = 1;
+	}
+	
+	for (int i = 0; i < size; i++)
+	{
+		primos[i] = 1;
+	}
+	
+
+	// No llega a 5
+	for (int i = 2; i * i <= size; i++)
+	{
+		if (primos[i]) {
+			for (int j = i * i; j <= size; j += i)
+			{
+				primos[j] = 0;
+			}
+			// impresion
+
+			for (int i = 2; i <= size; i++)
+			{
+				if (primos[i]) {
+					cout << i << ' ';
+				}
+				else {
+					cout << "-1 ";
+				}
+			}
+			cout << endl;
+		}
+	}
+	getch();
+	return 0;
+}
+
