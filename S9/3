@@ -1,0 +1,79 @@
+EJERCICIO 3 - SEMANA 9
+
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+
+void sumaNumerosImaginarios(int* realN1, int* imagN1, int* realN2, int* imagN2) {
+	cout << "El resultado es: " <<
+		*realN1 + *realN2 << " + " << *imagN1 + *imagN2 << "i" << endl;
+}
+
+void restaNumerosImaginarios(int* realN1, int* imagN1, int* realN2, int* imagN2) {
+	cout << "El resultado es: " <<
+		*realN1 - *realN2;
+	if (*imagN1 - *imagN2 > 0) { cout << " + "; }
+	cout << *imagN1 - *imagN2 << "i" << endl;
+}
+void menu() {
+	//Numero 1
+	int* parteRealN1 = new int(), * parteImaginariaN1 = new int();
+	//Numero 2
+	int* parteRealN2 = new int(), * parteImaginariaN2 = new int();
+	int op;
+	do
+	{
+		cout << "--------------[ MENU ]--------------" << endl;
+		cout << "1. Sumar 2 numeros complejos" << endl;
+		cout << "2. Restar 2 numeros complejos" << endl;
+		cout << "3. Salir del programa" << endl;
+
+		cout << "Ingrese una opcion: ";
+		cin >> op;
+
+		switch (op)
+		{
+		case 1:
+			cout << "Ingrese la parte real del numero 1: ";
+			cin >> *parteRealN1;
+			cout << "Ingrese la parte imaginaria del numero 1: ";
+			cin >> *parteImaginariaN1;
+			cout << *parteRealN1 << " + " << *parteImaginariaN1 << "i" << endl;
+			cout << "Ingrese la parte real del numero 2: ";
+			cin >> *parteRealN2;
+			cout << "Ingrese la parte imaginaria del numero 2: ";
+			cin >> *parteImaginariaN2;
+			cout << *parteRealN2 << " + " << *parteImaginariaN2 << "i" << endl;
+			sumaNumerosImaginarios(parteRealN1, parteImaginariaN1, parteRealN2, parteImaginariaN2);
+			break;
+		case 2:
+			cout << "Ingrese la parte real del numero 1: ";
+			cin >> *parteRealN1;
+			cout << "Ingrese la parte imaginaria del numero 1: ";
+			cin >> *parteImaginariaN1;
+			cout << *parteRealN1 << " + " << *parteImaginariaN1 << "i" << endl;
+			cout << "Ingrese la parte real del numero 2: ";
+			cin >> *parteRealN2;
+			cout << "Ingrese la parte imaginaria del numero 2: ";
+			cin >> *parteImaginariaN2;
+			cout << *parteRealN2 << " + " << *parteImaginariaN2 << "i" << endl;
+			restaNumerosImaginarios(parteRealN1, parteImaginariaN1, parteRealN2, parteImaginariaN2);
+
+			break;
+		}
+		system("pause");
+		system("cls");
+	} while (op != 3);
+
+	delete parteRealN1;
+	delete parteImaginariaN1;
+	delete parteRealN2;
+	delete parteImaginariaN2;
+}
+int main() {
+	menu();
+
+	system("pause>0");
+	return 0;
+}
