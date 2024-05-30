@@ -1,0 +1,107 @@
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+using namespace System;
+
+int* Agregar_Elemento(int* Vector, int* N, int Numero)
+{
+	int* Aux = new int[*N + 1];  // se define un arreglo temporal
+	for (int i = 0; i < *N; i++)   // la primera vez no ingresa al ciclo porque el arreglo está vacío
+		Aux[i] = Vector[i];  // a partir de la segunda vez el ciclo permite recorrer el arreglo hasta el final
+	Aux[*N] = Numero; // se agrega Numero al final del arreglo
+	*N = *N + 1;  	// El tamaño del arreglo se incrementa en 1 
+	return Aux;
+}
+void Muestra_Arreglo(int* Vector, int* N)
+{
+	for (int i = 0; i < *N; i++) {
+		cout << " Vector[" << i << "] = " << Vector[i] << endl; ;
+	}
+}
+
+int* Elimina_Posicion(int* Vector, int* N, int posicion) {
+	int* Aux = new int[*N -1];  // se define un arreglo temporal
+
+	for (short i = 0; i < posicion; i++)
+		Aux[i] = Vector[i];
+
+	for (short i = posicion; i < *N-1; i++)
+		Aux[i] = Vector[i+1];
+	
+	*N = *N - 1;
+
+	return Aux;
+}
+
+int* Inserta_Posicion(int* Vector, int* N, int posicion, int valor) {
+	int* Aux = new int[*N + 1];  // se define un arreglo temporal
+
+	for (short i = 0; i < posicion; i++)
+		Aux[i] = Vector[i];
+
+	Aux[posicion] = valor;
+
+	for (short i = posicion; i < *N + 1; i++)
+		Aux[i+1] = Vector[i];
+
+	*N = *N + 1;
+
+	return Aux;
+}
+
+
+int main() {
+	int* arreglo; //puntero de tipo int 
+	int* t = new int;
+	Random r;
+	while (1)
+	{
+		Console::Clear();
+		//no olvide validar para que no se ingrese un valor negativo
+
+		do {
+			cout << "Ingrese el tamaño del arreglo: ";
+			cin >> *t;
+		} while (*t <= 0);
+
+		//memoria dinámica
+		arreglo = new int[*t];
+
+
+
+		//generar datos para el arreglo
+		for (int i = 0; i < *t; i++)
+		{
+			arreglo[i] = r.Next(0, 100); //valores aleatorios
+			cout << "arreglo[" << i << "] = " << arreglo[i] << endl;
+		}
+
+	//	cout << endl << "Nuevo Arreglo n+1:" << endl;
+	//	arreglo = Agregar_Elemento(arreglo, t, 100);
+		//Muestra_Arreglo(arreglo, t);
+		//generar datos para el arreglo
+	/*	for (int i = 0; i < *t; i++)
+		{
+			//arreglo[i] = r.Next(0, 100); //valores aleatorios
+			cout << "arreglo[" << i << "] = " << arreglo[i] << endl;
+		}
+		*/
+
+		cout << endl << "Eliminar Posicion:" << endl;
+		arreglo = Elimina_Posicion(arreglo, t, 3);
+		Muestra_Arreglo(arreglo, t);
+
+		cout << endl << "Insertar Posicion:" << endl;
+		arreglo = Inserta_Posicion(arreglo, t, 3, -1);
+		Muestra_Arreglo(arreglo, t);
+
+
+		cout << "\nPresione una tecla para continuar... "; _getch();
+		delete[]arreglo;
+		arreglo = nullptr; //apuntar a la nada
+	}
+
+	_getch();
+	return 0;
+}
