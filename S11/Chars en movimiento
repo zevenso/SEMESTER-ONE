@@ -1,0 +1,42 @@
+#include "pch.h"
+#include<iostream>
+#include<conio.h>
+using namespace System;
+using namespace std;
+void ventana() {
+Console::SetWindowSize(80, 40);
+srand(time(nullptr));
+}
+void cursor(int x, int y) {
+Console::CursorVisible = false;
+Console::SetCursorPosition(x, y);
+}
+int aleatorio(int min, int max) {
+return rand() % (max - min + 1) + min;
+}
+int main()
+{
+ventana();
+int X[10] = { 5,10,15,20,25,30,35,40,45,50 };
+int Y[10] = { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 };
+int DX[10] = { 1, -1, 1, -1, 1, -1, 1, -1, 1, -1 };
+int DY[10] = { -1, 1, -1, 1, -1, 1, -1, 1, -1, 1 };
+int i = 0;
+while (1)
+{
+//borrar
+cursor(X[i], Y[i]); cout << " ";
+//mover
+if (X[i] < 1 || X[i]>78) DX[i] *= -1;
+if (Y[i] < 1 || Y[i]>38) DY[i] *= -1;
+X[i] += DX[i];
+Y[i] += DY[i];
+//dibujar
+cursor(X[i], Y[i]); cout << (char)(aleatorio(65, 90));
+i++;
+if (i > 9) i = 0;
+_sleep(10);
+}
+system("pause>0");
+return 0;
+}
