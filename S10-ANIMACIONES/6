@@ -1,0 +1,121 @@
+EJERCICIO 6 - SEMANA 10
+
+
+#include <iostream>
+#include <conio.h>
+#define WIDTH 80
+#define HEIGHT 40
+
+#define ARRIBA 72
+#define ABAJO 80
+#define IZQUIERDA 75
+#define DERECHA 77
+
+using namespace std;
+using namespace System;
+
+
+void borrar(int x, int y, int ancho) {
+	for (int i = 0; i < ancho; i++)
+	{
+		Console::SetCursorPosition(x + i, y);
+		cout << ' ';
+	}
+}
+void dibujar(int x, int y, int ancho) {
+	for (int i = 0; i < ancho; i++)
+	{
+		Console::SetCursorPosition(x + i, y);
+		cout << '*';
+	}
+}
+void mover(int& x, int& y, int& dx, int& dy, int ancho) {
+	if (x + dx < 0 || x + ancho + dx >= WIDTH) {
+		dx *= -1;
+	}
+	if (y + dy < 0 || y + dy >= HEIGHT) {
+		dy *= -1;
+	}
+	x += dx;
+	y += dy;
+}
+
+bool colisionar(int xc, int yc, int x2, int y2, int ancho2) {
+	for (int i = 0; i < ancho2; i++) {
+		if (yc == y2 && xc == x2 + i) {
+			return true;
+		}
+	}
+	return false;
+}
+// x1 < x2 + ancho2 &&  x2 < x1 + ancho1 && y1 < y2 + alto2 && y2 < y1 + alto1
+
+int main()
+{
+	Console::SetWindowSize(WIDTH, HEIGHT);
+	Console::CursorVisible = false;
+	srand(time(nullptr));
+	
+	int xc, yc, dxc, dyc;
+	// arr figuras
+	int numFiguras = rand() % 6 + 3;
+	int* arrx, * arry, * arrdx, * arrdy, * arrAnchos;
+	arrx = new int[numFiguras];
+	arry = new int[numFiguras];
+	arrdx = new int[numFiguras];
+	arrdy = new int[numFiguras];
+	arrAnchos = new int[numFiguras];
+	// asignamos valores
+	xc = 0;
+	yc = HEIGHT - 1;
+	dxc = 1;
+	dyc = 0;
+	for (int i = 0; i < numFiguras; i++)
+	{
+		arrx[i] = rand() % WIDTH;
+		arry[i] = rand() % HEIGHT;
+		arrdx[i] = rand() % 2;
+		arrdy[i] = rand() % 2;
+		arrAnchos[i] = rand() % 3 + 2;
+	}
+	arrx[0] = WIDTH - 15;
+	arry[0] = HEIGHT - 1;
+	arrdx[0] = -1;
+	arrdy[0] = 0;
+	arrAnchos[0] = 9;
+	while (true)
+	{
+		Console::SetCursorPosition(xc, yc);
+		cout << ' ';
+		for (int i = 0; i < numFiguras; i++)
+		{
+			borrar(arrx[i], arry[i], arrAnchos[i]);
+		}
+		mover(xc, yc, dxc, dyc, 1);
+		for (int i = 0; i < numFiguras; i++)
+		{
+			mover(arrx[i], arry[i], arrdx[i], arrdy[i], arrAnchos[i]);
+		}
+		// comprobamos colision
+		for (int i = 0; i < numFiguras; i++)
+		{
+			if (colisionar(xc, yc, arrx[i], arry[i], arrAnchos[i])) {
+				Console::Clear();
+				cout << "Colisionaron...";
+				system("pause>0");
+			}
+		}
+		Console::SetCursorPosition(xc, yc);
+		cout << 'o';
+
+		for (int i = 0; i < numFiguras; i++)
+		{
+			dibujar(arrx[i], arry[i], arrAnchos[i]);
+		}
+		_sleep(40);
+	}
+
+
+	system("pause>0");
+	return 0;
+}
