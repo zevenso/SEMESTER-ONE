@@ -1,0 +1,30 @@
+
+#include "pch.h"
+#include "iostream"
+using namespace System;
+using namespace std;
+int main()
+{
+srand(time(nullptr));
+string articulos[] = { "la","el","los", "un", "unos","unas","una" };
+string sustantivos[] = { "casa","perro","gato", "Juan", "Lucas","mesa","borrador","lapiz","tienda","fruta" };
+string verbo[] = { "correr","servir","escribir", "jugar", "vender","tomar","crear","mover","dormir","servir" };
+int const N = 10;
+int* arreglo = new int[N];
+// string* arreglo = new string[N];
+int palabras = 0;
+while (1)
+{
+cout << articulos[rand() % 7] << " "; _sleep(10); palabras++;
+cout << sustantivos[rand() % 10] << " "; _sleep(10); palabras++;
+cout << verbo[rand() % 10] << " "; _sleep(10); palabras++;
+if(palabras%10==0)
+{
+cout << endl;
+palabras = 0;
+}
+_sleep(100);
+}
+system("pause>0");
+return 0;
+}
