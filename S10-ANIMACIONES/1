@@ -1,1 +1,95 @@
+EJERCICIO 1 -SEMANA 10
 
+
+#include <iostream>
+#include <conio.h>
+#include <Windows.h>
+
+using namespace std;
+using namespace System;
+
+int randInt(int from, int to) {
+    return rand() % (to - from + 1) + from;
+}
+
+int* generarCoordenadasX(int cant) {
+    int* coords = new int[cant];
+
+    for (int i = 0; i < cant; ++i) {
+        coords[i] = i;
+    }
+
+    return coords;
+}
+
+int* generarCoordenadasY(int cant) {
+    int* coords = new int[cant];
+
+    for (int i = 0; i < cant; ++i) {
+        coords[i] = 0;
+    }
+
+    return coords;
+}
+
+int* generarVelocidadesEnY(int cant) {
+    int* coords = new int[cant];
+
+    for (int i = 0; i < cant; ++i) {
+        coords[i] = (i % 3) + 1;
+    }
+
+    return coords;
+}
+
+int* generarColores(int cant) {
+    int* colores = new int[cant];
+
+    for (int i = 0; i < cant; ++i) {
+        colores[i] = randInt(1, 15);
+    }
+
+    return colores;
+}
+
+void imprimir(int x, int y, char caracter, int color) {
+    System::Console::SetCursorPosition(x, y);
+    System::Console::ForegroundColor = color; // (System::ConsoleColor)color
+
+    cout << caracter;
+}
+
+int main() {
+    srand(time(0));
+
+    const int WIDTH = 40;
+    const int HEIGHT = 20;
+    System::Console::SetWindowSize(WIDTH, HEIGHT);
+
+    int cantidadFiguras = WIDTH;
+    int* coordsX = generarCoordenadasX(cantidadFiguras);
+    int* coordsY = generarCoordenadasY(cantidadFiguras);
+    int* colores = generarColores(cantidadFiguras);
+    int* dys = generarVelocidadesEnY(cantidadFiguras);
+
+    while (true) {
+        for (int i = 0; i < cantidadFiguras; ++i) {
+            // 1. Borrar
+            imprimir(coordsX[i], coordsY[i], ' ', colores[i]);
+
+            // 2. Mueves
+            if (coordsY[i] + dys[i] < HEIGHT) coordsY += dys[i];
+
+            // 3. Dibujar
+            imprimir(coordsX[i], coordsY[i], '*', colores[i]);
+        }
+
+        _sleep(200);
+    }
+
+    delete[] coordsX, coordsY, dys, colores;
+    system("pause>0");
+    getch();
+    
+    return 0;
+}
