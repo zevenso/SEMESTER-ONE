@@ -1,0 +1,138 @@
+EJERCICIO 2 - SEMANA 10
+
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+using namespace System;
+
+
+void inicializarValores(int* posX, int* posY, int* dx, int* dy, int* ancho, int* alto, int* color, char* forma, int N, bool* esActivo) {
+	//rand() % (max - min + 1) + min;
+	for (int i = 0; i < N; i++) {
+		ancho[i] = rand() % (5 - 2 + 1) + 2;
+		alto[i] = 1;
+		posX[i] = rand() % ((Console::WindowWidth - ancho[i]) + 0 + 1) + 0;
+		posY[i] = rand() % ((Console::WindowHeight - alto[i]) + 0 + 1) + 0;
+		dx[i] = rand() % (3 - 1 + 1) + 1;
+		dy[i] = rand() % (3 - 1 + 1) + 1;
+		color[i] = rand() % (15 - 1 + 1) + 1;
+		forma[i] = '*';
+		esActivo[i] = true;
+	}
+}
+void dibujar(int* posX, int* posY, char* forma, int* color, int* ancho, bool* esActivo, int N) {
+	for (int i = 0; i < N; i++)
+	{
+		if (esActivo[i] == true)
+		{
+			Console::ForegroundColor = ConsoleColor(color[i]);
+			//Imprimimos la cantidad de asteriscos que tenga el ancho
+			for (int j = 0; j < ancho[i]; j++)
+			{
+				Console::SetCursorPosition(posX[i] + j, posY[i]); cout << forma[i];
+			}
+			Console::ResetColor();
+		}
+	}
+
+}
+void borrar(int* posX, int* posY, int* ancho, int N) {
+	for (int i = 0; i < N; i++)
+	{
+		//Borramos la cantidad de asteriscos que tenga el ancho
+		for (int j = 0; j < ancho[i]; j++)
+		{
+			Console::SetCursorPosition(posX[i] + j, posY[i]); cout << " ";
+		}
+	}
+}
+void colision(int* posX, int* posY, int* ancho, int* alto, bool* esActivo, int N, int& contActivos) {
+	for (int i = 0; i < N - 1; i++)//rojo
+	{
+		for (int j = i + 1; j < N; j++)//celeste
+		{
+			if (!(posY[i] + alto[i] < posY[j] || posY[i] > posY[j] + alto[j] || posX[i] > posX[j] + ancho[j] || posX[i] + ancho[i] < posX[j]) && esActivo[i] == true && esActivo[j] == true)
+			{
+				//Hay colision
+				//Desactive la figura de rojo y celeste
+				esActivo[i] = false;
+				esActivo[j] = false;
+				contActivos -= 2;
+				//El break es para que no se desactive mas de una vez
+				//En caso el de rojo colisione con uno de celeste se supone que ya no debe verificar con otros por eso 
+				//el bucle debe terminar, es decir break
+				break;
+			}
+		}
+	}
+
+}
+void mover(int* posX, int* posY, int* dy, int* dx, int* alto, int* color, char* forma, int* ancho, int N) {
+
+	for (int i = 0; i < N; i++)
+	{
+		//Si se sale por el borde superior o Si se sale del borde inferior de la consola 
+		if (posY[i] + dy[i] < 0 || posY[i] + alto[i] + dy[i] > Console::WindowHeight) {
+			//Rebotar
+			dy[i] *= -1;
+		}
+		//Si se sale por el borde izquierdo o Si se sale por el borde derecho de la consola
+		if (posX[i] + dx[i] < 0 || posX[i] + ancho[i] + dx[i] > Console::WindowWidth) {
+			//Rebotar
+			dx[i] *= -1;
+		}
+		//Moverlos en el eje y
+		posY[i] += dy[i];
+		//Moverlos en el eje x
+		posX[i] += dx[i];
+	}
+}
+int main() {
+	srand(time(NULL));
+	Console::CursorVisible = false;
+	//Cantidad de fichas
+	int N = rand() % (10 - 5 + 1) + 5;
+	//Posiciones en X para N fichas
+	int* posX = new int[N];
+	//Posiciones en Y para N fichas
+	int* posY = new int[N];
+	//Velocidad en X para N fichas
+	int* dx = new int[N];
+	//Velocidad en Y para N fichas
+	int* dy = new int[N];
+	//Ancho para N fichas
+	int* ancho = new int[N];
+	//Altura para N fichas
+	int* alto = new int[N];
+	//Color para N fichas
+	int* color = new int[N];
+	//forma para N fichas
+	char* forma = new char[N];
+	//Activos para N fichas-> Si es true se dibuja, si es false no se dibuja
+	bool* esActivo = new bool[N];
+
+	int contActivos = N;
+
+	//Inicializar valores
+	inicializarValores(posX, posY, dx, dy, ancho, alto, color, forma, N, esActivo);
+
+	do
+	{
+		//dibujar
+		dibujar(posX, posY, forma, color, ancho, esActivo, N);
+		Console::SetCursorPosition(0, 0); cout << "Fichas: " << N;
+		Console::SetCursorPosition(0, 1); cout << "Fichas activas: " << contActivos;
+		_sleep(50);
+		//borrar
+		borrar(posX, posY, ancho, N);
+		//colision
+		colision(posX, posY, ancho, alto, esActivo, N, contActivos);
+		//mover
+		mover(posX, posY, dy, dx, alto, color, forma, ancho, N);
+
+	} while (contActivos > 2);
+
+	getch();
+	return 0;
+}
