@@ -1,0 +1,90 @@
+EJERCICIO 3 - SEMANA 10
+
+
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+using namespace System;
+//Luvia de caracteres donde cada caracter 
+// tendra una velocidad diferente
+#define N 120
+void inicializarValores(int* posX, int* posY, int* dy, int* ancho, int* alto, int* color, char* forma) {
+	//rand() % (max - min + 1) + min;
+	for (int i = 0; i < N; i++) {
+		posX[i] = i;
+		posY[i] = 0;
+		dy[i] = rand() % (5 - 1 + 1) + 1;
+		ancho[i] = 1;
+		alto[i] = 1;
+		color[i] = rand() % (15 - 1 + 1) + 1;
+		forma[i] = rand() % ('Z' - 'A' + 1) + 'A';
+	}
+}
+void dibujar(int* posX, int* posY, char* forma, int* color) {
+	for (int i = 0; i < N; i++)
+	{
+		Console::ForegroundColor = ConsoleColor(color[i]);
+		Console::SetCursorPosition(posX[i], posY[i]); cout << forma[i];
+		Console::ResetColor();
+	}
+
+}
+void borrar(int* posX, int* posY) {
+	for (int i = 0; i < N; i++)
+	{
+		Console::SetCursorPosition(posX[i], posY[i]); cout << " ";
+	}
+}
+void mover(int* posY, int* dy, int* alto, int* color, char* forma) {
+
+	for (int i = 0; i < N; i++)
+	{
+		//Si se sale del borde inferior de la consola
+		if (posY[i] + alto[i] + dy[i] > Console::WindowHeight) {
+			//Teletransportar al inicio de la ventana
+			posY[i] = 0;
+			//nueva velocidad
+			dy[i] = rand() % (5 - 1 + 1) + 1;
+			//nuevo color
+			color[i] = rand() % (15 - 1 + 1) + 1;
+			//nueva forma
+			forma[i] = rand() % ('Z' - 'A' + 1) + 'A';
+		}
+		//Moverlos en el eje y
+		posY[i] += dy[i];
+	}
+}
+int main() {
+	srand(time(NULL));
+	//Posiciones en X para N caracteres
+	int* posX = new int[N];
+	//Posiciones en Y para N caracteres
+	int* posY = new int[N];
+	//Velocidad en Y para N caracteres
+	int* dy = new int[N];
+	//Ancho para N caracteres
+	int* ancho = new int[N];
+	//Altura para N caracteres
+	int* alto = new int[N];
+	//Color para N caracteres
+	int* color = new int[N];
+	//forma para N caracteres
+	char* forma = new char[N];
+
+	//Inicializar valores
+	inicializarValores(posX, posY, dy, ancho, alto, color, forma);
+	do
+	{
+		//dibujar
+		dibujar(posX, posY, forma, color);
+		_sleep(5);
+		//borrar
+		borrar(posX, posY);
+		//mover
+		mover(posY, dy, alto, color, forma);
+	} while (true);
+
+	getch();
+	return 0;
+}
