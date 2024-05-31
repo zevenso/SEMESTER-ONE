@@ -1,0 +1,111 @@
+EJERCICIO 1 / SEMANA 11
+#include "iostream"
+#include "conio.h"
+
+using namespace std;
+
+void Valores_Random(int cant, int* Arreglo) {
+	int inf = 1, sup = 100;
+
+	for (short i = 0; i < cant; i++)
+	{
+		Arreglo[i] = inf + rand() % (sup + 1 - inf);
+	}
+
+	//VALORES
+	cout << endl << "LOS VALORES DEL ARREGLO SON ";
+
+	for (int i = 0; i < cant; i++) {
+
+		cout << endl << "Valor #" << i + 1 << " : " << Arreglo[i];
+	}
+
+}
+
+
+void Mayor_Valor(int cant, int* Arreglo) {
+	int mayor = Arreglo[0];
+
+	for (int i = 1; i < cant; i++)
+		if (Arreglo[i] > mayor)
+			mayor = Arreglo[i];
+
+	cout << endl << "El mayor valor es : " << mayor << " y su ubicacion es " << &mayor;
+
+}
+
+
+void Menor_Valor(int cant, int* Arreglo) {
+
+	int menor = Arreglo[0];
+	for (int i = 1; i < cant; i++)
+		if (Arreglo[i] < menor)
+			menor = Arreglo[i];
+
+	cout << endl << "El menor valor es : " << menor << " y su ubicacion es " << &menor;
+
+}
+
+void Arreglo_Descendente(int cant, int* Arreglo) {
+	int *aux;
+
+	for (int i = 0; i < cant - 1; i++)
+		for (int j = i + 1; j < cant; j++)
+			if (Arreglo[i] < Arreglo[j]) {
+				*aux = Arreglo[i];
+				Arreglo[i] = Arreglo[j];
+				Arreglo[j] = *aux;
+			}
+
+	cout << endl << " Arreglo en orden descendente :" << endl;
+	for (short i = 0; i < cant; i++)
+		cout << endl << " - Valor # " << i + 1 << " : " << Arreglo[i] ;
+
+	delete* aux;
+}
+void Menu_Opciones(int cant, int* Arreglo) {
+
+	int opcion;
+	do {
+		cout << endl << endl << "------ MENU ------";
+		cout << endl << " 1. Buscar el mayor y mostrar su ubicación";
+		cout << endl << " 2. Buscar el menor y mostrar su ubicación";
+		cout << endl << " 3. Ordenar el arreglo en forma descendente";
+		cout << endl << "Ingrese su opcion : "; cin >> opcion;
+	} while (opcion < 1 || opcion > 3);
+
+	if (opcion == 1) {
+		Mayor_Valor(cant, Arreglo);
+	}
+	if (opcion == 2) {
+		Menor_Valor(cant, Arreglo);
+	}
+	if (opcion == 3) {
+		Arreglo_Descendente(cant, Arreglo);
+	}
+}
+
+int main() {
+
+	srand(time(NULL));
+
+	int cant;
+	int* Arreglo;
+	do {
+		cout << endl << "Ingrese la cantidad de valores para el arreglo : "; cin >> cant;
+
+	} while (cant < 1 || cant > 100);
+
+	Arreglo = new int[cant];
+
+	Valores_Random(cant, Arreglo);
+
+	cout << endl << "\nPresione una tecla para continuar.. "; _getch();
+	Menu_Opciones(cant, Arreglo);
+
+	delete[] Arreglo;
+	
+	getch();
+	return 0;
+	
+}
