@@ -1,0 +1,21 @@
+//generar aleatoriamente
+	srand(time(NULL)); //inicializar la semilla
+	for (short i = 0; i < nele; i++)
+	{
+		x[i] = Random::Random().Next(0, 20);
+		_sleep(20);
+	}
+
+
+srand(time(NULL));
+	//version solo rand()
+	int num;
+	num = rand();
+	//cout << num;
+
+
+	//version limite inf y sup
+	int inferior = 0;
+	int superior = 5000;
+	num = inferior + rand() % (superior + 1 - inferior);
+	cout << num;
