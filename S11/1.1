@@ -1,0 +1,124 @@
+EJERCICIO 1 VERSION 2
+
+#include <iostream>
+using namespace std;
+
+int randInt(int from, int to) {
+    return rand() % (to - from + 1) + from;
+}
+
+void mostrarMenu() {
+    cout << "\t\tMENU PRINCIPAL\n\n";
+    cout << "\t1. Generar nuevos numeros\n";
+    cout << "\t2. Listar los numeros\n";
+    cout << "\t3. Mostrar mayor numero\n";
+    cout << "\t4. Mostrar menor numero\n";
+    cout << "\t5. Ordenar dsc y mostrar\n";
+    cout << "\t6. Salir\n";
+    cout << "\n\tOpcion: ";
+}
+
+void generarNumeros(int* arreglo, int cant) {
+    for (int i = 0; i < cant; ++i) {
+        arreglo[i] = randInt(1, 101);
+    }
+}
+
+void mostrarArreglo(int* arreglo, int cant) {
+    cout << "\tNUMEROS ALMACENADOS EN EL ARREGLO\n\n";
+    for (int i = 0; i < cant; ++i) {
+        cout << "\t\tIndice " << i << ": " << arreglo[i] << '\n';
+    }
+}
+
+void mostrarMayorNumero(int* arreglo, int cant) {
+    cout << "\tMOSTRAR MAYOR NUMERO Y UBICACION\n\n";
+    int indiceDelMayor = 0;
+
+    for (int i = 1; i < cant; ++i) {
+        if (arreglo[i] > arreglo[indiceDelMayor]) {
+            indiceDelMayor = i;
+        }
+    }
+
+    cout << "\t\tMayor numero: " << arreglo[indiceDelMayor] << '\n';
+    cout << "\t\tIndice: " << indiceDelMayor << '\n';
+}
+
+void mostrarMenorNumero(int* arreglo, int cant) {
+    cout << "\tMOSTRAR MENOR NUMERO Y UBICACION\n\n";
+    int indiceDelMenor = 0;
+
+    for (int i = 1; i < cant; ++i) {
+        if (arreglo[i] < arreglo[indiceDelMenor]) {
+            indiceDelMenor = i;
+        }
+    }
+
+    cout << "\t\tMenor numero: " << arreglo[indiceDelMenor] << '\n';
+    cout << "\t\tIndice: " << indiceDelMenor << '\n';
+}
+
+void ordenarYMostrarArreglo(int* arreglo, int cant) {
+    cout << "\tORDENAR Y MOSTRAR ARREGLO\n\n";
+
+    for (int i = 0; i < cant - 1; ++i) {
+        for (int j = i + 1; j < cant; ++j) {
+            if (arreglo[i] < arreglo[j]) {
+                int temp = arreglo[i];
+                arreglo[i] = arreglo[j];
+                arreglo[j] = temp;
+            }
+        }
+    }
+
+    for (int i = 0; i < cant; ++i) {
+        cout << "\t\tIndice " << i << ": " << arreglo[i] << '\n';
+    }
+}
+
+int main() {
+    srand(time(0));
+    const int CANTIDAD = 10;
+    int opcion, val;
+
+    int* arreglo = new int[CANTIDAD];
+    generarNumeros(arreglo, CANTIDAD);
+
+    while (true) {
+        do {
+            system("cls");
+            mostrarMenu();
+            cin >> opcion;
+        } while (opcion < 1 || opcion > 6);
+
+        if (opcion == 6) {
+            break;
+        }
+
+        system("cls");
+
+        switch (opcion) {
+        case 1:
+            generarNumeros(arreglo, CANTIDAD);
+            cout << "\n\tSE HAN GENERADO NUEVOS NUMEROS";
+            break;
+        case 2:
+            mostrarArreglo(arreglo, CANTIDAD);
+            break;
+        case 3:
+            mostrarMayorNumero(arreglo, CANTIDAD);
+            break;
+        case 4:
+            mostrarMenorNumero(arreglo, CANTIDAD);
+            break;
+        case 5:
+            ordenarYMostrarArreglo(arreglo, CANTIDAD);
+            break;
+        }
+
+        system("pause");
+    }
+
+    return 0;
+}
