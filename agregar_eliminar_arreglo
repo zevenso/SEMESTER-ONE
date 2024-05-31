@@ -1,0 +1,103 @@
+#include<iostream>
+#include<conio.h>
+using namespace std;
+/*
+▪ Generar las notas 
+▪ Listar en pantalla las notas
+▪ Mostrar la mayor nota
+▪ Mostrar la menor nota
+▪ Mostrar la nota promedio
+▪ Mostrar el porcentaje de aprobados y desaprobados
+▪ Ordenar el arreglo en forma descendente
+*/
+ 
+void ordenar(int* notas, int N, bool (*condicion)(int, int)) {
+	for (int i = 0; i < N - 1; i++)//rojo
+	{
+		for (int j = i + 1; j < N; j++)//verde
+		{
+			if (condicion(notas[i], notas[j])) {
+				int aux = notas[i];
+				notas[i] = notas[j];
+				notas[j] = aux;
+			}
+		}
+	}
+}
+ 
+int* eliminarElementoPos(int* arr, int& N, int pos) {
+	//Creamos un nuevo arreglo con una posicion menos
+	int* nuevoArr = new int[N - 1];
+	//Copiamos los elementos que estan a la izquierda del arreglo original al nuevo arreglo
+	for (int i = 0; i < pos; i++)
+	{
+		nuevoArr[i] = arr[i];
+	}
+	//Copiamos los elementos que estan a la derecha del arreglo original al nuevo arreglo
+	for (int i = pos + 1; i < N; i++) {
+		nuevoArr[i - 1] = arr[i];
+	}
+	//Liberamos la memoria del arreglo original
+	delete[] arr;
+	//Actualizamos el valor de N
+	N--;
+	//Retornamos el nuevo arreglo
+	return nuevoArr;
+}
+ 
+void generarDatos(int* arrNumeros, int N) {
+	for (int i = 0; i < N; i++)
+	{
+		arrNumeros[i] = rand() % (100 - 1 + 1) + 1;
+	}
+}
+void mostrarDatos(int* arrNumeros, int N) {
+	for (int i = 0; i < N; i++)
+	{
+		cout << arrNumeros[i] << " ";
+	}
+}
+void imprimirVecesRepetidas(int* arrNumeros, int N) {
+	//Se asume que el arreglo que recibe esta ordenado
+	int contador = 1;
+	for (int i = 0; i < N; i++)
+	{
+		if (arrNumeros[i] == arrNumeros[i + 1]) {
+			contador++;
+		}
+		else 
+		{
+			cout << "El numero " << arrNumeros[i] << " se repite " << contador << " veces" << endl;
+			contador = 1;
+		}
+	}
+}
+void borrarValoresRepetidos(int*&arrNumeros, int& N) {
+	//Se asume que el arreglo que recibe esta ordenado
+	for (int i = 0; i < N; i++)
+	{
+		if (arrNumeros[i] == arrNumeros[i + 1]) {
+			arrNumeros = eliminarElementoPos(arrNumeros, N, i);
+			i--;
+		}
+	}
+ 
+}
+int main() {
+	srand(time(NULL));
+	int N = 30;
+ 
+	int* arrNumeros = new int[N];
+	generarDatos(arrNumeros, N);
+	mostrarDatos(arrNumeros, N);
+	cout << endl;
+	ordenar(arrNumeros, N, [](int a, int b) {return a > b; });
+	mostrarDatos(arrNumeros, N);
+	cout << endl;
+	imprimirVecesRepetidas(arrNumeros, N);
+	borrarValoresRepetidos(arrNumeros, N);
+	cout << endl;
+	mostrarDatos(arrNumeros, N);
+	_getch();
+	return 0;
+}
