@@ -1,0 +1,138 @@
+#include<iostream>
+#include<conio.h>
+using namespace std;
+/*
+▪ Generar las notas 
+▪ Listar en pantalla las notas
+▪ Mostrar la mayor nota
+▪ Mostrar la menor nota
+▪ Mostrar la nota promedio
+▪ Mostrar el porcentaje de aprobados y desaprobados
+▪ Ordenar el arreglo en forma descendente
+*/
+void generarNotas(int* notas, int N) {
+	//rand() % (max - min + 1) + min;
+	for (int i = 0; i < N; i++)
+	{
+		notas[i] = rand() % (20 - 0 + 1) + 0;
+	}
+}
+void mostrarNotas(int* notas, int N) {
+	for (int i = 0; i < N; i++)
+	{
+		cout << notas[i] << " ";
+	}
+	cout << endl;
+}
+void mostrarMayorNota(int* notas, int N) {
+	int mayorNota = notas[0];
+	for (int i = 1; i < N; i++)
+	{
+		if (notas[i] > mayorNota) {
+			mayorNota = notas[i];
+		}
+	}
+	cout << "La mayor nota es: " << mayorNota << endl;
+}
+void mostrarMenorNota(int* notas, int N) {
+	int menorNota = notas[0];
+ 
+	for (int i = 1; i < N; i++)
+	{
+		if (notas[i] < menorNota) {
+			menorNota = notas[i];
+		}
+	}
+	cout << "La menor nota es: " << menorNota << endl;
+}
+void mostrarNotaPromedio(int* notas, int N){
+	int sumaNotas = 0;
+	for (int i = 0; i < N; i++)
+	{
+		sumaNotas = sumaNotas + notas[i];
+	}
+	cout << "Nota promedio: " << sumaNotas*1.0 / N << endl;
+}
+void determinarPorcentajeAprobadosYDesaprobados(int* notas, int N) {
+	int cAprobados = 0;
+	int cDesaprobados = 0;
+	for (int i = 0; i < N; i++)
+	{
+		if (notas[i] >= 12) { cAprobados++; }
+	}
+	cDesaprobados = N - cAprobados;
+	cout << "Porcentaje de aprobados: " << (cAprobados * 100.0) / N << " % " << endl;
+	cout << "Porcentaje de desaprobados: " << (cDesaprobados * 100.0) / N << " % " << endl;
+}
+void ordenar(int* notas, int N, bool (*condicion)(int, int)) {
+	for (int i = 0; i < N - 1; i++)//rojo
+	{
+		for (int j = i + 1; j < N; j++)//verde
+		{
+			if (condicion(notas[i], notas[j])) {
+				int aux = notas[i];
+				notas[i] = notas[j];
+				notas[j] = aux;
+			}
+		}
+	}
+}
+ 
+ 
+void menu() {
+	//N representa la cantidad notas
+	int N;
+	do
+	{
+		cout << "Ingrese la cantidad de notas: ";
+		cin >> N;
+	} while (N < 0);
+ 
+	//Arreglo de notas
+	int* notas = new int[N];
+ 
+	int opcion;
+	do
+	{
+		cout << ":::::::::::::MENU::::::::::::" << endl;
+		cout << "1. Generar las notas" << endl;
+		cout << "2. Listar en pantalla las notas" << endl;
+		cout << "3. Mostrar la mayor nota" << endl;
+		cout << "4. Mostrar la menor nota" << endl;
+		cout << "5. Mostrar la nota promedio" << endl;
+		cout << "6. Mostrar el porcentaje de aprobados y desaprobados" << endl;
+		cout << "7. Ordenar el arreglo en forma ascendente" << endl;
+		cout << "8. Ordenar el arreglo en forma descendente" << endl;
+		cout << "9. Salir" << endl;
+ 
+		cout << "Ingrese una opcion: ";
+		cin >> opcion;
+ 
+		switch (opcion)
+		{
+		case 1: generarNotas(notas, N);	break;
+		case 2: mostrarNotas(notas, N);	break;
+		case 3: mostrarMayorNota(notas, N);	break;
+		case 4: mostrarMenorNota(notas, N);	break;
+		case 5: mostrarNotaPromedio(notas, N);	break;
+		case 6: determinarPorcentajeAprobadosYDesaprobados(notas, N);	break;
+		case 7: 
+			ordenar(notas, N, [](int a, int b) { return a < b; });
+			mostrarNotas(notas, N);
+			break;
+		case 8: 
+			ordenar(notas, N, [](int a, int b) { return a > b; });
+			mostrarNotas(notas, N);
+			break;
+		}
+ 
+		_getch();
+		system("cls");
+	} while (opcion != 9);
+}
+int main() {
+	srand(time(NULL));
+	menu();
+	_getch();
+	return 0;
+}
