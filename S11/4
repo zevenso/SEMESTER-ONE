@@ -1,0 +1,109 @@
+EJERCICIO 4 - SEMAN 11
+
+#include <iostream>
+using namespace std;
+ 
+int randInt(int from, int to) {
+  return rand() % (to - from + 1) + from;
+}
+ 
+int* generarArreglo(int cant) {
+  int* arreglo = new int[cant];
+ 
+  for (int i = 0; i < cant; ++i) {
+    arreglo[i] = randInt(1, 50);
+  }
+ 
+  return arreglo;
+}
+ 
+void mostrarArreglo(int* arreglo, int cant) {
+  cout << "Elementos del arreglo:\n";
+  for (int i = 0; i < cant; ++i) {
+    cout << "\tIndice [" << i << "]: " << arreglo[i] << '\n';
+  }
+  cout << '\n';
+}
+ 
+int obtenerCantidadDeMultiplosDe(int* arreglo, int cant, int x) {
+  int qty = 0;
+ 
+  for (int i = 0; i < cant; ++i) {
+    if (arreglo[i] % x == 0) ++qty;
+  }
+ 
+  return qty;
+}
+ 
+void eliminarMultiplosDeX(int* &arreglo, int &n, int x) {
+  int cantMultiplosDeX = obtenerCantidadDeMultiplosDe(arreglo, n, x);
+  int* nuevoArreglo = new int[n - cantMultiplosDeX];
+  int ptr = 0;
+ 
+  for (int i = 0; i < n; ++i) {
+    if (arreglo[i] % x != 0) {
+      nuevoArreglo[ptr] = arreglo[i];
+      ++ptr;
+    }
+  }
+ 
+  n -= cantMultiplosDeX;
+ 
+  delete[] arreglo;
+  arreglo = nuevoArreglo;
+}
+ 
+void ordenarDsc(int* arreglo, int cant) {
+  for (int i = 0; i < cant - 1; ++i) {
+    for (int j = i + 1; j < cant; ++j) {
+      if (arreglo[j] > arreglo[i]) {
+        int temp = arreglo[i];
+        arreglo[i] = arreglo[j];
+        arreglo[j] = temp;
+      }
+    }
+  }
+}
+ 
+void insertarOrdenado(int* &arreglo, int &n, int nuevoNumero) {
+  int* nuevoArreglo = new int[n + 1];
+ 
+  for (int i = 0; i < n; ++i) {
+    nuevoArreglo[i] = arreglo[i];
+  }
+ 
+  nuevoArreglo[n] = nuevoNumero;
+  ordenarDsc(nuevoArreglo, n + 1);  
+ 
+  delete[] arreglo;
+  arreglo = nuevoArreglo;
+  ++n;
+}
+ 
+int main() {
+  srand(time(0));
+  int n, nuevoNumero;
+ 
+  do {
+    cout << "Ingrese la cantidad de elementos: ";
+    cin >> n;
+  } while (n < 1 || n > 50);
+ 
+  cout << "Ingrese el nuevo numero a insertar: ";
+  cin >> nuevoNumero;
+ 
+  int* arreglo = generarArreglo(n);
+  mostrarArreglo(arreglo, n);
+ 
+  eliminarMultiplosDeX(arreglo, n, 3);
+  mostrarArreglo(arreglo, n);
+ 
+  ordenarDsc(arreglo, n);
+  mostrarArreglo(arreglo, n);
+ 
+  insertarOrdenado(arreglo, n, nuevoNumero);
+  mostrarArreglo(arreglo, n);
+ 
+  delete[] arreglo;
+  return 0;
+}
