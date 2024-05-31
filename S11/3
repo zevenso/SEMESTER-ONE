@@ -1,0 +1,88 @@
+EJERCICIO 3 - SEMANA 11
+
+
+#include <iostream>
+using namespace std;
+ 
+int randInt(int from, int to) {
+  return rand() % (to - from + 1) + from;
+}
+ 
+int* generarArreglo(int cant) {
+  int* arreglo = new int[cant];
+ 
+  for (int i = 0; i < cant; ++i) {
+    arreglo[i] = randInt(1, 10);
+  }
+ 
+  return arreglo;
+}
+ 
+void ordernarAsc(int* arreglo, int cant) {
+  for (int i = 0; i < cant - 1; ++i) {
+    for (int j = i + 1; j < cant; ++j) {
+      if (arreglo[j] < arreglo[i]) {
+        int temp = arreglo[i];
+        arreglo[i] = arreglo[j];
+        arreglo[j] = temp;
+      }
+    }
+  }
+}
+ 
+void mostrarArreglo(int* arreglo, int cant) {
+  cout << "Arreglo: ";
+ 
+  for (int i = 0; i < cant; ++i) {
+    cout << arreglo[i] << ' ';
+  }
+ 
+  cout << '\n';
+}
+ 
+void mostrarFrecuencias(int* arreglo, int cant) {
+  int maxValor = 10;
+ 
+  int* frecuenciaDe = new int[maxValor + 1];
+  // 0, 1, 2, ..., 10
+  // 0  0  0  ...  0
+  for (int num = 0; num <= maxValor; ++num) {
+    frecuenciaDe[num] = 0;
+  }
+  
+  /*
+    i: numero
+    freq[i]: frecuencia del numero i
+  */
+  for (int i = 0; i < cant; ++i) {
+    int num = arreglo[i];
+    ++frecuenciaDe[num];
+  }
+ 
+  for (int i = 1; i <= maxValor; ++i) {
+    if (frecuenciaDe[i] != 0) {
+      cout << i << " se repite " << frecuenciaDe[i];
+ 
+      if (frecuenciaDe[i] == 1) cout << " vez";
+      else cout << " veces";
+ 
+      cout << '\n';
+    }
+  }
+ 
+  delete[] frecuenciaDe;
+}
+ 
+int main() {
+  srand(time(0));
+  const int CANTIDAD = 12; // 30
+  int* arreglo = generarArreglo(CANTIDAD);
+ 
+  ordernarAsc(arreglo, CANTIDAD);
+  mostrarArreglo(arreglo, CANTIDAD);
+ 
+  mostrarFrecuencias(arreglo, CANTIDAD);
+ 
+  delete[] arreglo;
+  return 0;
+}
