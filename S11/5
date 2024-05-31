@@ -1,0 +1,101 @@
+EJERCICIO 5 - SEMANA 11
+
+
+#include <iostream>
+using namespace std;
+ 
+int randInt(int from, int to) {
+  return rand() % (to - from + 1) + from;
+}
+ 
+int* generarArreglo(int cant) {
+  int* arreglo = new int[cant];
+ 
+  for (int i = 0; i < cant; ++i) {
+    arreglo[i] = randInt(10, 30);
+  }
+ 
+  return arreglo;
+}
+ 
+void mostrarArreglo(int* arreglo, int cant) {
+  cout << "Elementos del arreglo:\n";
+  
+  for (int i = 0; i < cant; ++i) {
+    cout << "\tIndice [" << i << "]: " << arreglo[i] << '\n';
+  }
+ 
+  cout << '\n';
+}
+ 
+void ordenarAsc(int* arreglo, int cant) {
+  for (int i = 0; i < cant - 1; ++i) {
+    for (int j = i + 1; j < cant; ++j) {
+      if (arreglo[j] < arreglo[i]) {
+        int temp = arreglo[i];
+        arreglo[i] = arreglo[j];
+        arreglo[j] = temp;
+      }
+    }
+  }
+}
+ 
+void regenerarArreglo(int* &arreglo, int &cant, int rep) {
+  int maxElement = 30, uniqueElements = 0, num;
+ 
+  bool* seen = new bool[maxElement + 1];
+  for (int i = 0; i <= maxElement; ++i) seen[i] = false;
+ 
+  for (int i = 0; i < cant; ++i) {
+    num = arreglo[i];
+    if (!seen[num]) {
+      ++uniqueElements;
+    }
+    seen[num] = true;
+  }
+ 
+  int* nuevoArreglo = new int[uniqueElements * rep];
+  int ptr = 0;
+ 
+  for (int i = 0; i < cant; ++i) {
+    num = arreglo[i];
+ 
+    if (!seen[num]) continue;
+    seen[num] = false;
+ 
+    for (int j = 0; j < rep; ++j) {
+      nuevoArreglo[ptr++] = num;
+    }
+  }
+ 
+  cant = uniqueElements * rep;
+ 
+  delete[] arreglo;
+  arreglo = nuevoArreglo;
+}
+ 
+int main() {
+  srand(time(0));
+  int n, r;
+ 
+  do {
+    cout << "Ingrese la cantidad de elementos: ";
+    cin >> n;
+  } while (n < 1);
+ 
+  do {
+    cout << "Ingrese el valor de R: ";
+    cin >> r;
+  } while (r < 2 || r > 5);
+ 
+  int* arreglo = generarArreglo(n);
+  mostrarArreglo(arreglo, n);
+  ordenarAsc(arreglo, n);
+  mostrarArreglo(arreglo, n);
+ 
+  regenerarArreglo(arreglo, n, r);
+  mostrarArreglo(arreglo, n);
+ 
+  delete[] arreglo;
+  return 0;
+}
