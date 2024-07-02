@@ -1,0 +1,69 @@
+Ejercicio 2:
+ 
+#include <iostream>
+#include <cmath>
+using namespace std;
+ 
+int randInt(int from, int to) {
+  return rand() % (to - from + 1) + from;
+}
+ 
+int* generarByte() {
+  int* byte = new int[8];
+ 
+  for (int i = 0; i < 8; ++i) {
+    byte[i] = randInt(0, 1);
+  }
+ 
+  return byte;
+}
+ 
+void invertirBits(int* byte) {
+  for (int i = 0; i < 8; ++i) {
+    byte[i] = 1 - byte[i];
+  }
+}
+ 
+int convertirDecimal(int* byte) {
+  int decimal = 0;
+ 
+  for (int i = 0; i < 8; ++i) {
+    decimal += byte[7 - i] * pow(2, i);
+  }
+ 
+  return decimal;
+}
+ 
+void intercambiarBits(int* byte) {
+  for (int i = 0; i < 8; i += 2) {
+    swap(byte[i], byte[i + 1]);
+  }
+}
+ 
+void mostrarByte(int* byte) {
+  for (int i = 0; i < 8; ++i) {
+    cout << byte[i];
+  }
+  cout << '\n';
+}
+ 
+int main() {
+  srand(time(0));
+ 
+  cout << "Byte: ";
+  int* byte = generarByte();
+  mostrarByte(byte);
+ 
+  cout << "Invirtiendo bits: ";
+  invertirBits(byte);
+  mostrarByte(byte);
+ 
+  cout << "Intercambiando bits: ";
+  intercambiarBits(byte);
+  mostrarByte(byte);
+ 
+  cout << "Convertido a decimal: " << convertirDecimal(byte) << '\n';
+ 
+  delete[] byte;
+  return 0;
+}
