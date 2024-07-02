@@ -1,126 +1,145 @@
-
-#include <iostream>
-#include <conio.h>
+#include<iostream>
+#include<conio.h>
 using namespace std;
+using namespace System;
+#define COLUMNAS 40
+#define FILAS 40
  
-// namespace System {
-//   namespace Console {
-//     void SetCursorPosition(int x, int y);
-//     void SetWindowSize(int w, int h);
-//     bool CursorVisible;
-//   }
-// }
-// void _sleep(int ms);
-// bool _kbhit();
-// char _getch();
- 
+void dibujarMapa(int mapa[FILAS][COLUMNAS]) {
+		int mapa[FILAS][COLUMNAS] =
+	{   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},};
+  
+ for (int i = 0; i < FILAS; i++)
+	{
+		for (int j = 0; j < COLUMNAS; j++)
+		{
+			Console::SetCursorPosition(0 + j, 0 + i);
+			switch (mapa[i][j])
+			{
+			case 0: cout << " ";	break;
+			case 1:	cout << (char)219; break;
+			}
+		}
+		cout << endl;
+	}
+}
 struct Personaje {
-  char fig;
-  int x, y;
+	int x, y;
+	int dx, dy;
+	int ancho, alto;
+	int color;
 };
- 
-void mostrarPersonaje(Personaje &per) {
-  System::Console::SetCursorPosition(per.x, per.y);
-  cout << per.fig;
+void dibujarPersonaje(Personaje personaje){
+	Console::SetCursorPosition(personaje.x, personaje.y); cout << "*";
 }
- 
-int** generarMapa(int w, int h) {
-  int** matriz = new int* [h];
- 
-  for (int fila = 0; fila < h; ++fila) {
-    matriz[fila] = new int[w];
-    
-    for (int col = 0; col < w; ++col) {
-      if (fila == 0 || fila + 1 == h || col == 0 || col + 1 == w) {
-        matriz[fila][col] = 1;
-      }
-      else {
-        matriz[fila][col] = 0;
-      }
-    }
-  }
- 
-  matriz[0][w / 2] = 0;
-  return matriz;
+void borrarPersonaje(Personaje personaje){
+	Console::SetCursorPosition(personaje.x, personaje.y); cout << " ";
 }
+void moverPersonaje(Personaje& personaje, int mapa[FILAS][COLUMNAS]) {
+	char tecla;
+	if (_kbhit()) {
+		tecla = toupper(_getch());
+		switch (tecla)
+		{
+		case 'W':
+			if (mapa[personaje.y - personaje.dy][personaje.x] == 0) {
+				mapa[personaje.y][personaje.x] = 1;
+				dibujarMapa(mapa);
+				personaje.y -= personaje.dy;
+			}
+			break;
+		case 'S':
+			if (mapa[personaje.y + personaje.dy][personaje.x] == 0) {
+				mapa[personaje.y][personaje.x] = 1;
+				dibujarMapa(mapa);
+				personaje.y += personaje.dy;
+			}
+			break;
+		case 'A':
+			if (mapa[personaje.y][personaje.x - personaje.dx] == 0) {
+				mapa[personaje.y][personaje.x] = 1;
+				dibujarMapa(mapa);
+				personaje.x -= personaje.dx;
+			}
+			break;
+		case 'D':
+			if (mapa[personaje.y][personaje.x + personaje.dx] == 0) {
+				mapa[personaje.y][personaje.x] = 1;
+				dibujarMapa(mapa);
+				personaje.x += personaje.dx;
+			}
+			break;
+		}
  
-void mostrarMapa(int** matriz, int w, int h) {
-  for (int i = 0; i < h; ++i) {
-    for (int j = 0; j < w; ++j) {
-      System::Console::SetCursorPosition(i, j);
-      if (matriz[i][j] == 1) {
-        cout << 'X';
-      } else if (matriz[i][j] == 2) {
-        cout << '+';
-      } else {
-        cout << ' ';
-      }
-    }
-  }
+	}
+ 
 }
- 
-bool sePuedeMover(Personaje &per, int dx, int dy, int** mapa, int w, int h) {
-  int xObjetivo = per.x + dx;
-  int yObjetivo = per.y + dy;
- 
-  if (xObjetivo < 0 || xObjetivo + 1 >= w || yObjetivo < 0 || yObjetivo + 1 >= h) {
-    return false;
-  }
- 
-  return mapa[yObjetivo][xObjetivo] == 0;
-}
- 
 int main() {
-  const int WIDTH = 20;
-  const int HEIGHT = 20;
+	Console::SetWindowSize(41, 41);
+	Console::CursorVisible = false;
+	srand(time(NULL));
+	//creamos el mapa de 40 x 40
+
+	dibujarMapa(mapa);
  
-  // Creo que da buffer overflow en Windows CMD (40 x 40)
-  System::Console::SetWindowSize(WIDTH, HEIGHT);
-  System::Console::CursorVisible = false;
+	Personaje personaje;
+	personaje.x = 19;
+	personaje.y = 0;
+	personaje.dx = 1;
+	personaje.dy = 1;
+	personaje.ancho = 1;
+	personaje.alto = 1;
+	personaje.color = 2;
  
-  int** mapa = generarMapa(WIDTH, HEIGHT);
- 
-  Personaje per;
-  per.fig = 'O';
-  per.x = WIDTH / 2;
-  per.y = 0;
- 
-  while (true) {
-    if (_kbhit()) {
-      char tecla = toupper(_getch());
- 
-      switch (tecla) {
-        case 'W':
-          if (sePuedeMover(per, 0, -1, mapa, WIDTH, HEIGHT)) {
-            mapa[per.y][per.x] = 2;
-            --per.y;
-          }
-          break;
-        case 'A':
-          if (sePuedeMover(per, -1, 0, mapa, WIDTH, HEIGHT)) {
-            mapa[per.y][per.x] = 2;
-            --per.x;
-          }
-          break;
-        case 'S':
-          if (sePuedeMover(per, 0, 1, mapa, WIDTH, HEIGHT)) {
-            mapa[per.y][per.x] = 2;
-            ++per.y;
-          }
-          break;
-        case 'D':
-          if (sePuedeMover(per, 1, 0, mapa, WIDTH, HEIGHT)) {
-            mapa[per.y][per.x] = 2;
-            ++per.x;
-          }
-      }
-    }
- 
-    mostrarMapa(mapa, WIDTH, HEIGHT);
-    mostrarPersonaje(per);
- 
-    _sleep(250);
-  }
- 
-  return 0;
+	do
+	{
+		//dibujar
+		dibujarPersonaje(personaje);
+		_sleep(1);
+		//borrar
+		borrarPersonaje(personaje);
+		//mover
+		moverPersonaje(personaje, mapa);
+	} while (true);
+	_getch();
+	return 0;
 }
