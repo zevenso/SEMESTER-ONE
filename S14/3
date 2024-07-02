@@ -1,0 +1,112 @@
+#include<iostream>
+using namespace std;
+using namespace System;
+#define N 4
+#define ANCHO_CONSOLE 80
+#define ALTO_CONSOLE 40
+void Ingresa_Posicion_Satelites(int* PosicionXsatelite, int* PosicionYsatelite, int* dXsatelite, int* dYsatelite) {
+	cout << "Ingrese las Posiciones X de cada uno de los satélites: ";
+	for (int i = 0; i < N; i++)
+	{
+		do
+		{
+			cin >> PosicionXsatelite[i];
+ 
+		} while (PosicionXsatelite[i]< 0 || PosicionXsatelite[i] > 79);
+	}
+	cout << "Ingrese las Posiciones Y de cada uno de los satélites: ";
+	for (int i = 0; i < N; i++)
+	{
+		do
+		{
+			cin >> PosicionYsatelite[i];
+ 
+		} while (PosicionYsatelite[i] < 0 || PosicionYsatelite[i] > 39);
+	}
+	cout << "Ingrese el desplazamiento en X de los satélites:";
+	for (int i = 0; i < N; i++)
+	{
+		do
+		{
+			cin >> dXsatelite[i];
+ 
+		} while (dXsatelite[i] < -1 || dXsatelite[i] > 1);
+	}
+	cout << "Ingrese el desplazamiento en Y de los satélites:";
+	for (int i = 0; i < N; i++)
+	{
+		do
+		{
+			cin >> dYsatelite[i];
+ 
+		} while (dYsatelite[i] < -1 || dYsatelite[i] > 1);
+	}
+}
+void dibujar_satelites(int* posx, int* posy){
+ 
+	for (int i = 0; i < N; i++)
+	{
+		Console::SetCursorPosition(posx[i], posy[i]); cout << "*";
+	}
+}
+void borrar_satelites(int* posx, int* posy){
+	for (int i = 0; i < N; i++)
+	{
+		Console::SetCursorPosition(posx[i], posy[i]); cout << " ";
+	}
+}
+void mover_satelites(int* posx, int* posy, int* dx, int* dy){
+	for (int i = 0; i < N; i++)
+	{
+		//Si se encuentra en la mitadad izquierda de la consola
+		if (posx[i] >= 0 && posx[i] <= 38) {
+			//deberia rebotar en 0 y 38
+			if (posx[i] + dx[i] < 0 || posx[i] + dx[i] > 38) {
+				//reboto
+				dx[i] *= -1;
+			}
+		}
+		//Si se encuentra en la mitadad derecha de la consola
+		if (posx[i] >= 40 && posx[i] <= 79) {
+			//deberia rebotar en 40 y 79
+			if (posx[i] + dx[i] < 40 || posx[i] + dx[i] > 79) {
+				//reboto
+				dx[i] *= -1;
+			}
+		}
+		//para rebotar en la parte superior e inferior de la consola
+		if (posy[i] + dy[i] < 0 || posy[i] + dy[i]>39) {
+			dy[i] *= -1;
+		}
+ 
+		posx[i] = posx[i] + dx[i];
+		posy[i] = posy[i] + dy[i];
+	}
+ 
+}
+int main() {
+	Console::SetWindowSize(ANCHO_CONSOLE, ALTO_CONSOLE);
+ 
+	//Arreglo para almacenar las posciciones en x de los satelites
+	int* posX = new int[N];
+	//Arreglo para almacenar las posciciones en y de los satelites
+	int* posY = new int[N];
+	//Arreglo para almacenar los desplazmientos de los satelites
+	int* dx = new int[N];
+	//Arreglo para almacenar los desplazmientos de los satelites
+	int* dy = new int[N];
+ 
+	Ingresa_Posicion_Satelites(posX, posY, dx, dy);
+	system("cls");
+	do
+	{
+		//dibujar
+		dibujar_satelites(posX, posY);
+		_sleep(1);
+		//borrar
+		borrar_satelites(posX, posY);
+		//mover
+		mover_satelites(posX, posY, dx, dy);
+	} while (true);
+	return 0;
+}
