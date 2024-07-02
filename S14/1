@@ -1,0 +1,79 @@
+
+#include <iostream>
+using namespace std;
+ 
+int randInt(int from, int to) {
+  return rand() % (to - from + 1) + from;
+}
+ 
+int* generarMensaje(int longitud) {
+  int* mensaje = new int[longitud];
+ 
+  for (int i = 0; i < longitud; ++i) {
+    mensaje[i] = randInt(0, 9);
+  }
+ 
+  return mensaje;
+}
+ 
+void mostrarMensaje(int* mensaje, int longitud) {
+  cout << "Mensaje: ";
+ 
+  for (int i = 0; i < longitud; ++i) {
+    cout << mensaje[i] << ' ';
+  }
+ 
+  cout << '\n';
+}
+ 
+bool existeCapicuaEnRango(int* mensaje, int left, int right) {
+  while (left < right) {
+    if (mensaje[left] != mensaje[right]) {
+      return false;
+    }
+    ++left;
+    --right;
+  }
+  return true;
+}
+ 
+bool existeCapicua(int* mensaje, int longitud) {
+  int start = longitud - 4;
+  int end = longitud - 1;
+ 
+  return existeCapicuaEnRango(mensaje, start, end) ||
+          existeCapicuaEnRango(mensaje, start, end - 1) ||
+          existeCapicuaEnRango(mensaje, start + 1, end) ||
+          existeCapicuaEnRango(mensaje, start, start + 1) ||
+          existeCapicuaEnRango(mensaje, start + 1, start + 2) ||
+          existeCapicuaEnRango(mensaje, start + 2, start + 3);
+}
+ 
+bool existeSufijoCapicua(int* mensaje, int longitud) {
+  // Pueden limitarlo hasta longitud - 4
+  for (int i = longitud - 2; i >= 0; --i) {
+    if (existeCapicuaEnRango(mensaje, i, longitud - 1)) {
+      return true;
+    }
+  }
+  return false;
+}
+ 
+int main() {
+  srand(time(0));
+ 
+  int longitud = randInt(10, 15);
+  int* mensaje = generarMensaje(longitud);
+ 
+  mostrarMensaje(mensaje, longitud);
+ 
+  // if (existeCapicua(mensaje, longitud)) {
+  if (existeSufijoCapicua(mensaje, longitud)) {
+    cout << "Existe un capicua\n";
+  } else {
+    cout << "No hay ningun capicua\n";
+  }
+ 
+  delete[] mensaje;
+  return 0;
+}
