@@ -4,10 +4,96 @@ using namespace std;
 using namespace System;
 #define COLUMNAS 40
 #define FILAS 40
- 
+
 void dibujarMapa(int mapa[FILAS][COLUMNAS]) {
-		int mapa[FILAS][COLUMNAS] =
-	{   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+	for (int i = 0; i < FILAS; i++)
+	{
+		for (int j = 0; j < COLUMNAS; j++)
+		{
+			Console::SetCursorPosition(0 + j, 0 + i);
+			switch (mapa[i][j])
+			{
+			case 0: cout << " ";	break;
+			case 1:	cout << (char)219; break;
+			}
+		}
+	}
+}
+struct Personaje {
+	int x, y;
+	int dx, dy;
+	int ancho, alto;
+	int color;
+};
+void dibujarPersonaje(Personaje personaje) {
+	Console::SetCursorPosition(personaje.x, personaje.y); cout << "*";
+}
+void borrarPersonaje(Personaje personaje) {
+	Console::SetCursorPosition(personaje.x, personaje.y); cout << " ";
+}
+void moverPersonaje(Personaje& personaje, int mapa[FILAS][COLUMNAS]) {
+	//esta variable almacena la tecla que se presiona
+	char tecla;
+	//kbhit() devuelve true si se presiona una tecla
+	if (_kbhit()) {
+		//getch() obtiene la tecla que se presiona
+
+		tecla = toupper(_getch());
+
+		switch (tecla)
+		{
+		case 'W':
+			if (mapa[personaje.y - personaje.dy][personaje.x] == 0) {
+				//modifico el mapa dejando un 1(muro) en el mapa
+				mapa[personaje.y][personaje.x] = 1;
+				//redibujo el mapa
+				dibujarMapa(mapa);
+				//Cambio de posicion
+				personaje.y -= personaje.dy;
+			}
+			break;
+		case 'S':
+			if (mapa[personaje.y + personaje.dy][personaje.x] == 0) {
+				//modifico el mapa dejando un 1(muro) en el mapa
+				mapa[personaje.y][personaje.x] = 1;
+				//redibujo el mapa
+				dibujarMapa(mapa);
+				//Cambio de posicion
+				personaje.y += personaje.dy;
+			}
+			break;
+		case 'A':
+			if (mapa[personaje.y][personaje.x - personaje.dx] == 0) {
+				//modifico el mapa dejando un 1(muro) en el mapa
+				mapa[personaje.y][personaje.x] = 1;
+				//redibujo el mapa
+				dibujarMapa(mapa);
+				//Cambio de posicion
+				personaje.x -= personaje.dx;
+			}
+			break;
+		case 'D':
+			if (mapa[personaje.y][personaje.x + personaje.dx] == 0) {
+				//modifico el mapa dejando un 1(muro) en el mapa
+				mapa[personaje.y][personaje.x] = 1;
+				//redibujo el mapa
+				dibujarMapa(mapa);
+				//Cambio de posicion
+				personaje.x += personaje.dx;
+			}
+			break;
+		}
+
+	}
+
+}
+int main() {
+	Console::SetWindowSize(41, 41);
+	Console::CursorVisible = false;
+	srand(time(NULL));
+	//creamos el mapa de 40 x 40
+	int mapa[FILAS][COLUMNAS] =
+	{ {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
 		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -46,81 +132,11 @@ void dibujarMapa(int mapa[FILAS][COLUMNAS]) {
 		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
 		{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},};
-  
- for (int i = 0; i < FILAS; i++)
-	{
-		for (int j = 0; j < COLUMNAS; j++)
-		{
-			Console::SetCursorPosition(0 + j, 0 + i);
-			switch (mapa[i][j])
-			{
-			case 0: cout << " ";	break;
-			case 1:	cout << (char)219; break;
-			}
-		}
-		cout << endl;
-	}
-}
-struct Personaje {
-	int x, y;
-	int dx, dy;
-	int ancho, alto;
-	int color;
-};
-void dibujarPersonaje(Personaje personaje){
-	Console::SetCursorPosition(personaje.x, personaje.y); cout << "*";
-}
-void borrarPersonaje(Personaje personaje){
-	Console::SetCursorPosition(personaje.x, personaje.y); cout << " ";
-}
-void moverPersonaje(Personaje& personaje, int mapa[FILAS][COLUMNAS]) {
-	char tecla;
-	if (_kbhit()) {
-		tecla = toupper(_getch());
-		switch (tecla)
-		{
-		case 'W':
-			if (mapa[personaje.y - personaje.dy][personaje.x] == 0) {
-				mapa[personaje.y][personaje.x] = 1;
-				dibujarMapa(mapa);
-				personaje.y -= personaje.dy;
-			}
-			break;
-		case 'S':
-			if (mapa[personaje.y + personaje.dy][personaje.x] == 0) {
-				mapa[personaje.y][personaje.x] = 1;
-				dibujarMapa(mapa);
-				personaje.y += personaje.dy;
-			}
-			break;
-		case 'A':
-			if (mapa[personaje.y][personaje.x - personaje.dx] == 0) {
-				mapa[personaje.y][personaje.x] = 1;
-				dibujarMapa(mapa);
-				personaje.x -= personaje.dx;
-			}
-			break;
-		case 'D':
-			if (mapa[personaje.y][personaje.x + personaje.dx] == 0) {
-				mapa[personaje.y][personaje.x] = 1;
-				dibujarMapa(mapa);
-				personaje.x += personaje.dx;
-			}
-			break;
-		}
- 
-	}
- 
-}
-int main() {
-	Console::SetWindowSize(41, 41);
-	Console::CursorVisible = false;
-	srand(time(NULL));
-	//creamos el mapa de 40 x 40
+		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+	};
 
 	dibujarMapa(mapa);
- 
+
 	Personaje personaje;
 	personaje.x = 19;
 	personaje.y = 0;
@@ -129,7 +145,7 @@ int main() {
 	personaje.ancho = 1;
 	personaje.alto = 1;
 	personaje.color = 2;
- 
+
 	do
 	{
 		//dibujar
@@ -143,8 +159,6 @@ int main() {
 	_getch();
 	return 0;
 }
-
-
 
 OTRA VERSION
 
