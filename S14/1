@@ -1,4 +1,3 @@
-
 #include <iostream>
 using namespace std;
  
@@ -59,6 +58,16 @@ bool existeSufijoCapicua(int* mensaje, int longitud) {
   return false;
 }
  
+int contarSufijosCapicua(int* mensaje, int longitud) {
+  int contador = 0;
+  for (int i = longitud - 2; i >= 0; --i) {
+    if (existeCapicuaEnRango(mensaje, i, longitud - 1)) {
+      ++contador;
+    }
+  }
+  return contador;
+}
+ 
 int main() {
   srand(time(0));
  
@@ -73,6 +82,8 @@ int main() {
   } else {
     cout << "No hay ningun capicua\n";
   }
+ 
+  cout << "Hay " << contarSufijosCapicua(mensaje, longitud) << " sufijos capicuas\n";
  
   delete[] mensaje;
   return 0;
