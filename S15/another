@@ -1,0 +1,127 @@
+#include<iostream>
+#include<conio.h>
+
+using namespace std;
+using namespace System;
+#define N 4
+#define ANCHO 80
+#define ALTO 40
+
+
+void Ingresa_Coordenadas(int PosicionX[], int PosicionY[], int dX[], int dY[]) {
+	//X
+	cout << "Ingrese las posiciones en X de cada uno de los satelites: ";
+	for (int i = 0; i < N; i++) {
+		do
+		{
+		cout << endl << " - Satelite # " << i + 1 << " : "; cin >> PosicionX[i];
+		} while (PosicionX[i] < 0 || PosicionX[i] > 79);
+	}
+	//Y
+
+	cout << endl << "Ingrese las posiciones en Y de cada uno de los satelites: ";
+	for (int i = 0; i < N; i++) {
+		do
+		{
+			cout << endl << " - Satelite # " << i + 1 << " : "; cin >> PosicionY[i];
+
+		} while (PosicionY[i] < 0 || PosicionY[i] > 39);
+	}
+	//dX
+	cout << endl << "Ingrese el desplazamiento en X de los satelites : ";
+	for (int i = 0; i < N; i++) {
+		do
+		{
+			cout << endl << " - Desplazamiento X # " << i + 1 << " : "; cin >> dX[i];
+
+		} while (dX[i] < -1 || dX[i] > 2);
+	}
+
+	//dY
+	cout << endl << "Ingrese el desplazamiento en Y de los satelites : ";
+	for (int i = 0; i < N; i++) {
+		do
+		{
+			cout << endl << " - Desplazamiento Y # " << i + 1 << " : "; cin >> dY[i];
+
+		} while (dY[i] < -1 || dY[i] > 2);
+	}
+}
+
+void Dibujar_Satelite(int* PosicionX, int* PosicionY, int* Colors) {
+
+	for (int i = 0; i < N; i++)
+	{
+		Console::ForegroundColor = (ConsoleColor)Colors[i];
+		Console::SetCursorPosition(PosicionX[i], PosicionY[i]); cout << "*";
+		Console::ResetColor();
+	}
+}
+
+void Borrar_Satelites(int* PosicionX, int* PosicionY) {
+	for (int i = 0; i < N; i++)
+	{
+		Console::SetCursorPosition(PosicionX[i], PosicionY[i]); cout << " ";
+	}
+
+}
+
+void Mover_Satelites(int PosicionX[], int PosicionY[], int dX[], int dY[]) {
+	for (int i = 0; i < N; i++)
+	{
+		//IZQUIERDA REBOTES
+		if (PosicionX[i] >= 0 && PosicionX[i] <= 18) {
+		
+			if (PosicionX[i] + dX[i] < 0 || PosicionX[i] + dX[i] > 18) {
+				dX[i] *= -1;
+			}
+		}
+		//DERECHA REBOTES
+		if (PosicionX[i] >= 20 && PosicionX[i] <= 39) {
+
+			if (PosicionX[i] + dX[i] < 40 || PosicionX[i] + dX[i] > 79) {
+				dX[i] *= -1;
+			}
+		}
+
+		// SUPERIOR E INFERIOR
+		if (PosicionY[i] + dY[i] < 0 && PosicionY[i] + dY[i] > 79) {
+			dY[i] *= -1;
+		}
+		PosicionX[i] = PosicionX[i] + dX[i];
+		PosicionY[i] = PosicionY[i] + dY[i];
+	}
+
+}
+
+
+
+int main() {
+	Console::SetWindowSize(ANCHO, ALTO);
+	srand(time(NULL));
+
+	int* Colors = new int[N];
+	for (int i = 0; i < N; i++)
+	{
+		Colors[i] = rand() % (15 - 1 + 1) + 1;
+	}
+	int* PosicionX = new int[N];
+	int* PosicionY = new int[N];
+
+	int* dX = new int[N];
+	int* dY = new int[N];
+	Ingresa_Coordenadas(PosicionX, PosicionY, dX, dY);
+	system("cls");
+
+
+	while (1) {
+	
+		Dibujar_Satelite(PosicionX, PosicionY, Colors); _sleep(2);
+		Borrar_Satelites(PosicionX, PosicionY);
+		Mover_Satelites(PosicionX, PosicionY, dX, dY);
+	
+	}
+
+	_getch();
+	return 0;
+}
