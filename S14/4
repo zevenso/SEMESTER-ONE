@@ -1,0 +1,126 @@
+
+#include <iostream>
+#include <conio.h>
+using namespace std;
+ 
+// namespace System {
+//   namespace Console {
+//     void SetCursorPosition(int x, int y);
+//     void SetWindowSize(int w, int h);
+//     bool CursorVisible;
+//   }
+// }
+// void _sleep(int ms);
+// bool _kbhit();
+// char _getch();
+ 
+struct Personaje {
+  char fig;
+  int x, y;
+};
+ 
+void mostrarPersonaje(Personaje &per) {
+  System::Console::SetCursorPosition(per.x, per.y);
+  cout << per.fig;
+}
+ 
+int** generarMapa(int w, int h) {
+  int** matriz = new int* [h];
+ 
+  for (int fila = 0; fila < h; ++fila) {
+    matriz[fila] = new int[w];
+    
+    for (int col = 0; col < w; ++col) {
+      if (fila == 0 || fila + 1 == h || col == 0 || col + 1 == w) {
+        matriz[fila][col] = 1;
+      }
+      else {
+        matriz[fila][col] = 0;
+      }
+    }
+  }
+ 
+  matriz[0][w / 2] = 0;
+  return matriz;
+}
+ 
+void mostrarMapa(int** matriz, int w, int h) {
+  for (int i = 0; i < h; ++i) {
+    for (int j = 0; j < w; ++j) {
+      System::Console::SetCursorPosition(i, j);
+      if (matriz[i][j] == 1) {
+        cout << 'X';
+      } else if (matriz[i][j] == 2) {
+        cout << '+';
+      } else {
+        cout << ' ';
+      }
+    }
+  }
+}
+ 
+bool sePuedeMover(Personaje &per, int dx, int dy, int** mapa, int w, int h) {
+  int xObjetivo = per.x + dx;
+  int yObjetivo = per.y + dy;
+ 
+  if (xObjetivo < 0 || xObjetivo + 1 >= w || yObjetivo < 0 || yObjetivo + 1 >= h) {
+    return false;
+  }
+ 
+  return mapa[yObjetivo][xObjetivo] == 0;
+}
+ 
+int main() {
+  const int WIDTH = 20;
+  const int HEIGHT = 20;
+ 
+  // Creo que da buffer overflow en Windows CMD (40 x 40)
+  System::Console::SetWindowSize(WIDTH, HEIGHT);
+  System::Console::CursorVisible = false;
+ 
+  int** mapa = generarMapa(WIDTH, HEIGHT);
+ 
+  Personaje per;
+  per.fig = 'O';
+  per.x = WIDTH / 2;
+  per.y = 0;
+ 
+  while (true) {
+    if (_kbhit()) {
+      char tecla = toupper(_getch());
+ 
+      switch (tecla) {
+        case 'W':
+          if (sePuedeMover(per, 0, -1, mapa, WIDTH, HEIGHT)) {
+            mapa[per.y][per.x] = 2;
+            --per.y;
+          }
+          break;
+        case 'A':
+          if (sePuedeMover(per, -1, 0, mapa, WIDTH, HEIGHT)) {
+            mapa[per.y][per.x] = 2;
+            --per.x;
+          }
+          break;
+        case 'S':
+          if (sePuedeMover(per, 0, 1, mapa, WIDTH, HEIGHT)) {
+            mapa[per.y][per.x] = 2;
+            ++per.y;
+          }
+          break;
+        case 'D':
+          if (sePuedeMover(per, 1, 0, mapa, WIDTH, HEIGHT)) {
+            mapa[per.y][per.x] = 2;
+            ++per.x;
+          }
+      }
+    }
+ 
+    mostrarMapa(mapa, WIDTH, HEIGHT);
+    mostrarPersonaje(per);
+ 
+    _sleep(250);
+  }
+ 
+  return 0;
+}
