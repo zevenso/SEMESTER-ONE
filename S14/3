@@ -42,11 +42,13 @@ void Ingresa_Posicion_Satelites(int* PosicionXsatelite, int* PosicionYsatelite, 
 		} while (dYsatelite[i] < -1 || dYsatelite[i] > 1);
 	}
 }
-void dibujar_satelites(int* posx, int* posy){
+void dibujar_satelites(int* posx, int* posy, int* colores){
  
 	for (int i = 0; i < N; i++)
 	{
+		Console::ForegroundColor = (ConsoleColor)colores[i];
 		Console::SetCursorPosition(posx[i], posy[i]); cout << "*";
+		Console::ResetColor();
 	}
 }
 void borrar_satelites(int* posx, int* posy){
@@ -86,7 +88,7 @@ void mover_satelites(int* posx, int* posy, int* dx, int* dy){
 }
 int main() {
 	Console::SetWindowSize(ANCHO_CONSOLE, ALTO_CONSOLE);
- 
+	srand(time(NULL));
 	//Arreglo para almacenar las posciciones en x de los satelites
 	int* posX = new int[N];
 	//Arreglo para almacenar las posciciones en y de los satelites
@@ -95,13 +97,20 @@ int main() {
 	int* dx = new int[N];
 	//Arreglo para almacenar los desplazmientos de los satelites
 	int* dy = new int[N];
+	//Arrelgo para alacenar colores de los satelites
+	int* colores = new int[N];
+ 
+	for (int i = 0; i < N; i++)
+	{
+		colores[i] = rand() % (15 - 1 + 1) + 1;
+	}
  
 	Ingresa_Posicion_Satelites(posX, posY, dx, dy);
 	system("cls");
 	do
 	{
 		//dibujar
-		dibujar_satelites(posX, posY);
+		dibujar_satelites(posX, posY, colores);
 		_sleep(1);
 		//borrar
 		borrar_satelites(posX, posY);
