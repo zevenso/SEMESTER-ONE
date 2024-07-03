@@ -1,0 +1,113 @@
+#include <iostream>
+#include <conio.h>
+using namespace std;
+ 
+int randInt(int from, int to) {
+  return rand() % (to - from + 1) + from;
+}
+ 
+int* generarCodigos(int cant) {
+  int* codigos = new int[cant];
+ 
+  for (int i = 0; i < cant; ++i) {
+    codigos[i] = 201 + i;
+  }
+ 
+  return codigos;
+}
+ 
+int** generarConsumos(int cant) {
+  int** consumos = new int*[cant];
+ 
+  for (int i = 0; i < cant; ++i) {
+    consumos[i] = new int[3];
+    consumos[i][0] = randInt(10, 30);
+    consumos[i][1] = randInt(30, 50);
+    consumos[i][2] = randInt(10, 30);
+  }
+ 
+  return consumos;
+}
+ 
+void mostrarRegistros(int* codigos, int** consumos, int cant) {
+  for (int i = 0; i < cant; ++i) {
+    cout << "Codigo #" << codigos[i];
+    cout << " -> Fijo: " << consumos[i][0];
+    cout << " -> Celular: " << consumos[i][1];
+    cout << " -> SMS: " << consumos[i][2] << '\n';
+  }
+}
+ 
+void mostrarVendedoresConMayorCantidadMinutosCelular(int* codigos, int** consumos, int cant) {
+  int maxMinutos = 0;
+ 
+  for (int i = 0; i < cant; ++i) {
+    maxMinutos = max(maxMinutos, consumos[i][1]);
+  }
+ 
+  cout << "Los vendedores con la mayor cantidad de minutos a celular son:\n";
+  for (int i = 0; i < cant; ++i) {
+    if (consumos[i][1] == maxMinutos) {
+      cout << '\t' << codigos[i] << '\n';
+    }
+  }
+}
+ 
+void mostrarMontoPorExceso(int* codigos, int** consumos, int cant) {
+  float montoPorExceso;
+ 
+  for (int i = 0; i < cant; ++i) {
+    montoPorExceso = 0;
+ 
+    if (consumos[i][0] > 20) {
+      montoPorExceso += (consumos[i][0] - 20) * 0.35;
+    }
+ 
+    if (consumos[i][1] > 40) {
+      montoPorExceso += (consumos[i][1] - 40) * 0.45;
+    }
+ 
+    if (consumos[i][2] > 20) {
+      montoPorExceso += (consumos[i][2] - 20) * 0.20;
+    }
+ 
+    // Esta linea reemplaza todo lo de arriba
+    // montoPorExceso = max(0, consumos[i][0] - 20) * 0.35 + max(0, consumos[i][1] - 40) *0.45 + max(0, consumos[i][2] - 20) * 0.20;
+ 
+    cout << "Vendedor #" << codigos[i] << " -> Monto por exceso S/." << montoPorExceso << '\n';
+  }
+}
+ 
+void mostrarPromediosDeConsumos(int** consumos, int cant) {
+  int sumMinFijo = 0, sumMinCel = 0, sumMensajes = 0;
+ 
+  for (int i = 0; i < cant; ++i) {
+    sumMinFijo += consumos[i][0];
+    sumMinCel += consumos[i][1];
+    sumMensajes += consumos[i][2];
+  }
+ 
+  cout << "Promedio de minutos fijos: " << 1.0 * sumMinFijo / cant << '\n';
+  cout << "Promedio de minutos celular: " << 1.0 * sumMinCel / cant << '\n';
+  cout << "Promedio de mensajes: " << 1.0 * sumMensajes / cant << '\n';
+}
+ 
+int main() {
+  srand(time(0));
+  
+  const int CANTIDAD_VENDEDORES = 12;
+ 
+  int* codigos = generarCodigos(CANTIDAD_VENDEDORES);
+  int** consumos = generarConsumos(CANTIDAD_VENDEDORES);
+ 
+  mostrarRegistros(codigos, consumos, CANTIDAD_VENDEDORES);
+  mostrarVendedoresConMayorCantidadMinutosCelular(codigos, consumos, CANTIDAD_VENDEDORES);
+  mostrarMontoPorExceso(codigos, consumos, CANTIDAD_VENDEDORES);
+ 
+  mostrarPromediosDeConsumos(consumos, CANTIDAD_VENDEDORES);
+ 
+  for (int i = 0; i < CANTIDAD_VENDEDORES; ++i) delete[] consumos[i];
+  delete[] codigos, consumos;
+  _getch();
+  return 0;
+}
