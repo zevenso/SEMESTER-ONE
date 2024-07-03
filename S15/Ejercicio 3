@@ -111,3 +111,129 @@ int main() {
   _getch();
   return 0;
 }
+
+VERSION ORDENADA:
+
+
+
+#include <iostream>
+#include <conio.h>
+using namespace std;
+using namespace System;
+#define Cant_Vendedores 30
+
+
+void Posicion(int x, int y) {
+	Console::SetCursorPosition(x, y);
+
+}
+
+int *Generar_Codigos( ) {
+	int* codigos = new int[Cant_Vendedores];
+	for (int i = 0; i < Cant_Vendedores; ++i) {
+		codigos[i] = 201 + i;
+	}
+	return codigos;
+}
+
+int** Generar_Consumos( ) {
+	int** consumos = new int* [Cant_Vendedores];
+
+	for (int i = 0; i < Cant_Vendedores; ++i) {
+
+		consumos[i] = new int[3];
+
+		consumos[i][0] = rand() % (30 - 1 + 1) + 1;
+		consumos[i][1] = rand() % (50 - 1 + 1) + 1;
+		consumos[i][2] = rand() % (30 - 1 + 1) + 1;
+	}
+	return consumos;
+}
+
+void Mostrar_Registros(int** consumos, int* codigos) {
+	Posicion(6, 1); cout << "Codigo";
+	Posicion(5, 2); cout << "Vendedor";
+	Posicion(24, 1); cout << "Telefono";
+	Posicion(26, 2); cout << "Fijo";
+	Posicion(42, 1); cout << "Telefono";
+	Posicion(43, 2); cout << "Celular";
+	Posicion(60, 1); cout << "Mensajes de";
+	Posicion(62, 2); cout << "Texto";
+	cout << endl << endl << endl;
+	for (int i = 0; i < Cant_Vendedores; ++i) {
+
+		cout << "      # " << codigos[i] << "                 " << consumos[i][0] << "                 " << consumos[i][1] << "                 " << consumos[i][2] << endl;
+
+	}
+}
+
+
+void Determinar_Tiempo_Llamadas_Celular(int** consumos, int* codigos) {
+
+	int tiempo_maximo = 0;
+	for (int i = 0; i < Cant_Vendedores; ++i) {
+		//determinar maximo
+		tiempo_maximo = max(tiempo_maximo, consumos[i][1]);
+	}
+	cout << endl << "Los vendedores con mayor cantidad de tiempo en llamada en celulares es : " << endl;
+	for (int i = 0; i < Cant_Vendedores; ++i) {
+		//determinar maximo
+		if (consumos[i][1] == tiempo_maximo) {
+
+			cout << "  - #" << codigos[i] << endl;
+		}
+
+	}
+}
+
+void Monto_Excesos(int** consumos, int* codigos){
+	float exceso;
+	cout << endl << "MONTOS POR EXCESOS DE TIEMPO " << endl;
+	for (int i = 0; i < Cant_Vendedores; ++i) {
+		exceso = 0;
+		if (consumos[i][0] > 20) {
+			exceso += (consumos[i][0] - 20) * 0.35;
+		}
+		if (consumos[i][1] > 40) {
+			exceso += (consumos[i][1] - 40) * 0.45;
+	    }
+		if (consumos[i][2] > 20) {
+		
+			exceso += (consumos[i][2] - 20) * 0.20;
+		}
+		cout << "Vendedor  #" << codigos[i] << " -> Monto por exceso S/." << exceso << endl;
+
+	}
+	
+
+}
+
+void Promedio_Consumos(int** consumos) {
+	int sumMinFijo = 0, sumMinCel = 0, sumMensajes = 0;
+
+	for (int i = 0; i < Cant_Vendedores; ++i) {
+		sumMinFijo += consumos[i][0];
+		sumMinCel += consumos[i][1];
+		sumMensajes += consumos[i][2];
+	}
+	cout << endl;
+	cout << "Promedio de minutos fijos: " << 1.0 * sumMinFijo / Cant_Vendedores << '\n';
+	cout << "Promedio de minutos celular: " << 1.0 * sumMinCel / Cant_Vendedores << '\n';
+	cout << "Promedio de mensajes: " << 1.0 * sumMensajes / Cant_Vendedores << '\n';
+}
+
+
+int main() {
+	srand(time(0));
+
+	int* codigos = Generar_Codigos();
+	int** consumos = Generar_Consumos();
+
+	Mostrar_Registros(consumos, codigos);
+	Determinar_Tiempo_Llamadas_Celular(consumos, codigos);
+	Monto_Excesos(consumos, codigos);
+	Promedio_Consumos(consumos);
+
+_getch();
+return 0;
+}
