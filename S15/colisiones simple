@@ -1,0 +1,102 @@
+#include <iostream>
+#define WIDTH 80
+#define HEIGHT 40
+using namespace System;
+using namespace std;
+ 
+void borrar(int x, int y, int ancho, int alto) {
+	for (int i = 0; i < ancho; i++)
+	{
+		for (int j = 0; j < alto; j++)
+		{
+			Console::SetCursorPosition(x + i, y + j);
+			cout << ' ';
+		}
+	}
+}
+ 
+void dibujar(int x, int y, int ancho, int alto) {
+	for (int i = 0; i < ancho; i++)
+	{
+		for (int j = 0; j < alto; j++)
+		{
+			Console::SetCursorPosition(x + i, y + j);
+			cout << '*';
+		}
+	}
+}
+ 
+void mover(int& x, int& y, int ancho, int alto, int& dx, int& dy) {
+	// colisiones sencillas
+	if (x + dx < 0 || x + dx + ancho >= WIDTH) {
+		dx *= -1;
+	}
+ 
+	if (y + dy < 0 || y + dy + alto >= HEIGHT) {
+		dy *= -1;
+	}
+ 
+	x += dx;
+	y += dy;
+}
+ 
+bool estanColisionandoPocoEfeciciente(int x, int y, int ancho, int alto, int x2, int y2, int ancho2, int alto2) {
+	for (int i = 0; i < ancho; i++)
+	{
+		for (int j = 0; j < alto; j++)
+		{
+			for (int k = 0; k < ancho2; k++)
+			{
+				for (int l = 0; l < alto2; l++)
+				{
+					if (x + i == x2 + k && y + j == y2 + l) {
+						return true;
+					}
+				}
+			}
+		}
+	}
+	return false;
+}
+ 
+bool estanColisionando(int x, int y, int ancho, int alto, int x2, int y2, int ancho2, int alto2) {
+	if (x < x2 + ancho2 && x2 < x + ancho && y < y2 + alto2 && y2 < y + alto) {
+		return true;
+	}
+	return false;
+}
+ 
+int main() {
+	Console::SetWindowSize(WIDTH, HEIGHT);
+	Console::CursorVisible = false;
+	int x, y, dx, dy, ancho, alto;
+	x = y = 0;
+	dy = 1;
+	dx = 1;
+	ancho = 4;
+	alto = 6;
+ 
+	int x2, y2, dx2, dy2, ancho2, alto2;
+	x2 = y2 = 20;
+	dy2 = 1;
+	dx2 = -1;
+	ancho2 = 2;
+	alto2 = 3;
+ 
+	while (true) {
+		borrar(x, y, ancho, alto);
+		borrar(x2, y2, ancho2, alto2);
+ 
+		mover(x, y, ancho, alto, dx, dy);
+		mover(x2, y2, ancho2, alto2, dx2, dy2);
+ 
+		dibujar(x, y, ancho, alto);
+		dibujar(x2, y2, ancho2, alto2);
+		if (estanColisionando(x, y, ancho, alto, x2, y2, ancho2, alto2)) {
+			break;
+		}
+		_sleep(20);
+	}
+	system("pause>0");
+	return 0;
+}
