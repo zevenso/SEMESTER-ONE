@@ -1,0 +1,78 @@
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+ 
+int randInt(int from, int to) {
+  return rand() % (to - from + 1) + from;
+}
+ 
+int** generarMatriz(int n) {
+  int** matriz = new int* [n];
+ 
+  for (int i = 0; i < n; ++i) {
+    matriz[i] = new int[n];
+    for (int j = 0; j < n; ++j) {
+      matriz[i][j] = randInt(0, 9);
+    }
+  }
+ 
+  return matriz;
+}
+ 
+void mostrarMatriz(int** matriz, int n) {
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < n; ++j) {
+      cout << matriz[i][j] << ' ';
+    }
+    cout << '\n';
+  }
+  cout << '\n';
+}
+ 
+void contarPatronEnMatriz(int patron, int** matriz, int n) {
+  int cont = 0;
+  int unidades = patron % 10;
+  int decenas = (patron / 10) % 10;;
+  int centenas = patron / 100;
+ 
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < n - 2; ++j) {
+      if (
+        matriz[i][j] == centenas &&
+        matriz[i][j + 1] == decenas &&
+        matriz[i][j + 2] == unidades
+      ) {
+        ++cont;
+      }
+    }
+  }
+ 
+  cout << "El patron '" << patron << "' se repite: " << cont << " veces\n";
+}
+ 
+int main() {
+  srand(time(0));
+  int n, patron;
+ 
+  do {
+    cout << "Ingrese N: ";
+    cin >> n;
+  } while (n < 1 || n > 30);
+ 
+  do {
+    cout << "Ingrese el patron: ";
+    cin >> patron;
+  } while (patron < 100 || patron > 999);
+ 
+  int** matriz = generarMatriz(n);
+ 
+  mostrarMatriz(matriz, n);
+  contarPatronEnMatriz(patron, matriz, n);
+ 
+  for (int i = 0; i < n; ++i) delete[] matriz[i];
+  delete[] matriz;
+
+_getch();
+  return 0;
+}
