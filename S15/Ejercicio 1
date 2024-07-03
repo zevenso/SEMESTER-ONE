@@ -1,0 +1,92 @@
+#include <iostream>
+#include <conio.h>
+
+using namespace std;
+
+int randInt(int from, int to) {
+    return rand() % (to - from + 1) + from;
+}
+
+void generarRegistros(int* pesos, char* tuvoGripe, char* tuvoTos, int cant) {
+    for (int i = 0; i < cant; ++i) {
+        pesos[i] = randInt(30, 60);
+        tuvoTos[i] = (randInt(0, 1) ? 'S' : 'N');
+        tuvoGripe[i] = (randInt(0, 1) ? 'S' : 'N');
+    }
+}
+
+void mostrarRegistros(int* pesos, char* tuvoGripe, char* tuvoTos, int cant) {
+    for (int i = 0; i < cant; ++i) {
+        cout << "\nAlumno #" << i + 1 << '\n';
+        cout << "\tGripe: " << tuvoGripe[i] << '\n';
+        cout << "\tTos: " << tuvoTos[i] << '\n';
+        cout << "\tPeso: " << pesos[i] << '\n';
+    }
+}
+
+void mostrarPorcentajeGripeTos(char* tuvoGripe, char* tuvoTos, int n) {
+    int cant = 0;
+
+    for (int i = 0; i < n; ++i) {
+        if (tuvoGripe[i] == 'S' && tuvoTos[i] == 'S') {
+            ++cant;
+        }
+    }
+
+    cout << "El porcentaje de estudiantes que tuvieron GRIPE y TOS es de: ";
+    cout << 100.0 * cant / n << "%\n";
+}
+
+void mostrarPesoPromedioDeEnfermos(int* pesos, char* tuvoGripe, char* tuvoTos, int cant) {
+    int sumPesos = 0;
+    int cantEnfermos = 0;
+
+    for (int i = 0; i < cant; ++i) {
+        if (tuvoGripe[i] == 'S' || tuvoTos[i] == 'S') {
+            sumPesos += pesos[i];
+            ++cantEnfermos;
+        }
+    }
+
+    cout << "El peso promedio de los estudiantes enfermos es de: ";
+    cout << 1.0 * sumPesos / cantEnfermos << "kg.\n";
+}
+
+void ordenarDscPorPeso(int* pesos, char* tuvoGripe, char* tuvoTos, int n) {
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = i + 1; j < n; ++j) {
+            if (pesos[i] < pesos[j]) {
+                swap(pesos[i], pesos[j]);
+                swap(tuvoGripe[i], tuvoGripe[j]);
+                swap(tuvoTos[i], tuvoTos[j]);
+            }
+        }
+    }
+}
+
+int main() {
+    srand(time(0));
+    int n;
+
+    do {
+        cout << "Ingrese la cantidad de alumnos: ";
+        cin >> n;
+    } while (n < 1 || n > 20);
+
+    char* tuvoGripe = new char[n];
+    char* tuvoTos = new char[n];
+    int* pesos = new int[n];
+
+    generarRegistros(pesos, tuvoGripe, tuvoTos, n);
+    mostrarRegistros(pesos, tuvoGripe, tuvoTos, n);
+
+    mostrarPorcentajeGripeTos(tuvoGripe, tuvoTos, n);
+    mostrarPesoPromedioDeEnfermos(pesos, tuvoGripe, tuvoTos, n);
+
+    ordenarDscPorPeso(pesos, tuvoGripe, tuvoTos, n);
+    mostrarRegistros(pesos, tuvoGripe, tuvoTos, n);
+
+    delete[] tuvoGripe, tuvoTos, pesos;
+    _getch();
+    return 0;
+}
